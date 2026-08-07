@@ -1,0 +1,6 @@
+body {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+    background-color: white;
+}
