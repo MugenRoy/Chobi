@@ -1,4 +1,4 @@
-# Getting Started with Source Code
+# Getting Started with the Source Code
 
 1) Install Node.js LTS version.
 2) Install neu cli globally - `npm install -g @neutralinojs/neu`.
