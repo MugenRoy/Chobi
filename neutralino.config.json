@@ -16,7 +16,8 @@
   "nativeAllowList": [
     "app.*",
     "os.*",
-    "debug.log"
+    "debug.log",
+    "window.*"
   ],
   "globalVariables": {
     "TEST1": "Hello",
@@ -33,15 +34,15 @@
   "modes": {
     "window": {
       "title": "Chobi",
-      "width": 800,
-      "height": 500,
-      "minWidth": 400,
-      "minHeight": 200,
+      "width": 1024,
+      "height": 768,
+      "minWidth": 800,
+      "minHeight": 600,
       "center": true,
       "fullScreen": false,
       "alwaysOnTop": false,
       "icon": "/resources/icons/appIcon.png",
-      "enableInspector": true,
+      "enableInspector": false,
       "borderless": false,
       "maximize": false,
       "hidden": false,
