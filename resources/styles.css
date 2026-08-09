@@ -31,7 +31,8 @@ main {
 #left-sidebar {
     height: 100%;
     /*
-       SR: clamp(min, ideal, max) -> As long as ideal value is between the min and max the value will change dynamically.
+       SR: clamp(min, ideal, max) -> As long as ideal value is between the min and max
+       the value will change dynamically.
     */
     width: clamp(50px, 3.5vw, 60px);
     border-right: 1px solid var(--border-color);
