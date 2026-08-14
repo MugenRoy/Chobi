@@ -60,9 +60,15 @@ main {
     width: 40px;
     height: 40px;
     margin: 8px;
+    padding: 0;
     border: none;
     background: transparent;
-    color: #ffffff;
-    font-size: 22px;
     cursor: pointer;
+}
+
+#selection-tool img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: auto;
 }
