@@ -1,24 +1,152 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Chobi</title>
+
     <link rel="stylesheet" href="/styles.css">
+
     <script src="/js/neutralino.js" defer></script>
     <script src="/js/fabric.min.js" defer></script>
     <script src="/js/main.js" defer></script>
-  </head>
-  <body>
-      <header>
-      </header>
-      <main>
-          <aside id="left-sidebar">
-          </aside>
-          <div id="middle-area">
-              <canvas id="photo-area"></canvas>
-          </div>
-          <aside id="right-sidebar">
-          </aside>
-      </main>
-  </body>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <header id="top-bar">
+        <div class="app-brand">
+            <div class="app-logo">C</div>
+            <span>Chobi</span>
+        </div>
+
+        <div class="top-actions">
+            <button class="top-button" title="Undo">↶</button>
+            <button class="top-button" title="Redo">↷</button>
+        </div>
+    </header>
+
+
+    <!-- Main Application -->
+    <main id="main-container">
+
+        <!-- LEFT SIDEBAR -->
+        <aside id="left-sidebar">
+
+            <!-- Selection and Image Tools -->
+            <div class="toolbar-section">
+
+                <button class="tool-button active" title="Select">
+                    <span class="tool-icon">↖</span>
+                    <span class="tool-label">Select</span>
+                </button>
+
+                <button class="tool-button" title="Open Image">
+                    <span class="tool-icon">▣</span>
+                    <span class="tool-label">Open</span>
+                </button>
+
+                <button class="tool-button" title="Crop">
+                    <span class="tool-icon">⌗</span>
+                    <span class="tool-label">Crop</span>
+                </button>
+
+                <button class="tool-button" title="Rotate">
+                    <span class="tool-icon">↻</span>
+                    <span class="tool-label">Rotate</span>
+                </button>
+
+                <button class="tool-button" title="Flip">
+                    <span class="tool-icon">⇋</span>
+                    <span class="tool-label">Flip</span>
+                </button>
+
+            </div>
+
+
+            <!-- Divider -->
+            <div class="toolbar-divider"></div>
+
+
+            <!-- Drawing Tools -->
+            <div class="toolbar-section">
+
+                <button class="tool-button" title="Add Text">
+                    <span class="tool-icon text-icon">T</span>
+                    <span class="tool-label">Text</span>
+                </button>
+
+                <button class="tool-button" title="Shapes">
+                    <span class="tool-icon">◇</span>
+                    <span class="tool-label">Shape</span>
+                </button>
+
+                <button class="tool-button" title="Freehand Drawing">
+                    <span class="tool-icon">✎</span>
+                    <span class="tool-label">Draw</span>
+                </button>
+
+            </div>
+
+
+            <!-- Divider -->
+            <div class="toolbar-divider"></div>
+
+
+            <!-- Filter and Export Tools -->
+            <div class="toolbar-section">
+
+                <button class="tool-button" title="Filters">
+                    <span class="tool-icon">◐</span>
+                    <span class="tool-label">Filter</span>
+                </button>
+
+                <button class="tool-button" title="Export Image">
+                    <span class="tool-icon">↓</span>
+                    <span class="tool-label">Export</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CENTER CANVAS -->
+        <section id="middle-area">
+
+            <div id="canvas-container">
+
+                <canvas id="photo-area"></canvas>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDEBAR -->
+        <aside id="right-sidebar">
+
+        </aside>
+
+    </main>
+
+
+    <!-- Bottom Status Bar -->
+    <footer id="status-bar">
+
+        <span id="status-text">
+            Ready
+        </span>
+
+        <span id="zoom-text">
+            100%
+        </span>
+
+    </footer>
+
+</body>
+
 </html>
