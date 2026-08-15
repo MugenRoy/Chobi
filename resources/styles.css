@@ -55,3 +55,20 @@ main {
     width: clamp(200px, 18vw, 260px);
     border-left: 1px solid var(--border-color);
 }
+
+#selection-tool {
+    width: 40px;
+    height: 40px;
+    margin: 8px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#selection-tool img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: auto;
+}
