@@ -16,5 +16,13 @@ const canvas = new fabric.Canvas("photo-area", properties);
 
 // SR: Functionality from here
 function selectionTool() {
-  canvas.isDrawingMode = false;
+    canvas.isDrawingMode = false;
+    const select = document.getElementById("selection-tool");
+    select.classList.add("tool-active");
+}
+
+function drawTool() {
+    canvas.isDrawingMode = true;
+    const draw = document.getElementById("draw-tool");
+    draw.classList.add("tool-active");
 }
