@@ -5,19 +5,16 @@ function onWindowClose() {
 Neutralino.init();
 Neutralino.events.on("windowClose", onWindowClose);
 
-const canvas = new fabric.Canvas("photo-area");
+const properties = {
+    width: window.innerWidth * 0.65,
+    height: window.innerHeight * 0.75,
+    isDrawingMode: false
+};
 
-const selectionTool = document.getElementById('selection-tool');
+const canvas = new fabric.Canvas("photo-area", properties);
 
-selectionTool?.addEventListener('click', () => {
-    setActiveTool('select');
-});
 
-function setup() {
-    canvas.setDimensions({
-        width: window.innerWidth * 0.80,
-        height: window.innerHeight * 0.80
-    });
+// SR: Functionality from here
+function selectionTool() {
+  canvas.isDrawingMode = false;
 }
-
-setup();
