@@ -14,15 +14,47 @@ const properties = {
 const canvas = new fabric.Canvas("photo-area", properties);
 
 
-// SR: Functionality from here
+let activeTool = null;
+
 function selectionTool() {
     canvas.isDrawingMode = false;
+    activeTool = "selection";
+
     const select = document.getElementById("selection-tool");
     select.classList.add("tool-active");
 }
 
 function drawTool() {
     canvas.isDrawingMode = true;
+    activeTool = "draw";
+
     const draw = document.getElementById("draw-tool");
     draw.classList.add("tool-active");
 }
+
+document.addEventListener("keydown", function(event) {
+    const activeObject = canvas.getActiveObject();
+
+    if (activeTool === "selection" && activeObject) {
+        if (event.key === "Delete") {
+            canvas.remove(activeObject);
+            canvas.discardActiveObject();
+            canvas.renderAll();
+        }
+
+        if (event.ctrlKey && event.key.toLowerCase() === "d") {
+            event.preventDefault();
+
+            activeObject.clone(function(cloned) {
+                cloned.set({
+                    left: activeObject.left + 10,
+                    top: activeObject.top + 10
+                });
+
+                canvas.add(cloned);
+                canvas.setActiveObject(cloned);
+                canvas.renderAll();
+            });
+        }
+    }
+});
