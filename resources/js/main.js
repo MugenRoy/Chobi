@@ -44,6 +44,14 @@ function drawTool() {
     selection.classList.remove("tool-active");
 
     canvas.discardActiveObject();
+
+    if (!canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    }
+
+    canvas.freeDrawingBrush.color = "#000000";
+    canvas.freeDrawingBrush.width = 2;
+    
     canvas.renderAll();
 }
 
@@ -75,7 +83,7 @@ function saveCanvasState() {
     redoStack = [];
 }
 
-function undoTool() {
+async function undoTool() {
 
     if (undoStack.length <= 1) {
         return;
@@ -90,34 +98,32 @@ function undoTool() {
 
     isRestoringState = true;
 
-    canvas.loadFromJSON(previousState, function () {
-
+    try {
+        await canvas.loadFromJSON(previousState);
         canvas.renderAll();
-
+    } finally {
         isRestoringState = false;
-    });
+    }
 }
 
-function redoTool() {
+async function redoTool() {
 
     if (redoStack.length === 0) {
         return;
     }
 
-    // Get next state
     const nextState = redoStack.pop();
 
-    // Add it back to undo history
     undoStack.push(nextState);
 
     isRestoringState = true;
 
-    canvas.loadFromJSON(nextState, function () {
-
+    try {
+        await canvas.loadFromJSON(nextState);
         canvas.renderAll();
-
+    } finally {
         isRestoringState = false;
-    });
+    }
 }
 
 function bringForwardTool() {
@@ -132,7 +138,7 @@ function bringForwardTool() {
         return;
     }
 
-    canvas.bringForward(activeObject);
+    canvas.bringObjectForward(activeObject);
 
     canvas.renderAll();
 
@@ -152,7 +158,7 @@ function sendBackwardTool() {
         return;
     }
 
-    canvas.sendBackwards(activeObject);
+    canvas.sendObjectBackwards(activeObject);
 
     canvas.renderAll();
 
@@ -232,3 +238,82 @@ document.addEventListener("keydown", async function(event) {
 });
 
 undoStack.push(getCanvasState());
+
+const importButton = document.getElementById("import-button");
+const imageInput = document.getElementById("image-input");
+
+importButton.addEventListener("click", function () {
+    imageInput.click();
+});
+
+imageInput.addEventListener("change", function (event) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = async function (e) {
+
+        const imageData = e.target.result;
+
+        try {
+            const img = await fabric.Image.fromURL(imageData);
+
+            if (!img) {
+                console.error("Failed to load image.");
+                return;
+            }
+
+            img.set({
+                left: 100,
+                top: 100
+            });
+
+            canvas.add(img);
+            canvas.setActiveObject(img);
+            canvas.renderAll();
+        } catch (error) {
+            console.error("Failed to load image.", error);
+        }
+    };
+
+    reader.onerror = function () {
+        console.error("Failed to read image file.");
+    };
+
+    reader.readAsDataURL(file);
+
+    imageInput.value = "";
+});
+
+function exportTool() {
+    const dataURL = canvas.toDataURL({
+        format: "png",
+        quality: 1
+    });
+
+    const link = document.createElement("a");
+    link.href = dataURL;
+    link.download = "chobi-image.png";
+    link.click();
+}
+
+const newCanvasButton =
+    document.getElementById("new-canvas-button");
+
+newCanvasButton.addEventListener("click", function () {
+
+    canvas.discardActiveObject();
+    canvas.clear();
+
+    canvas.renderAll();
+
+    undoStack = [];
+    redoStack = [];
+
+    undoStack.push(getCanvasState());
+});

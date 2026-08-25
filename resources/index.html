@@ -10,10 +10,58 @@
     <script src="/js/main.js" defer></script>
   </head>
   <body>
-      <header>
-      </header>
-      <main>
-          <aside id="left-sidebar">
+    <header id="top-bar">
+      <div id="app-title">
+        Chobi
+      </div>
+      <nav id="menu-bar">
+        <div class="menu">
+          <button class="menu-button">
+            File
+          </button>
+          <div class="dropdown">
+            <button id="new-canvas-button">
+              New Canvas
+            </button>
+            <button id="import-button">
+              Import Image
+            </button>
+            <button id="export-tool" onclick="exportTool()">
+                Export Image
+            </button>
+          </div>
+        </div>
+        <div class="menu">
+          <button class="menu-button">
+            Layer
+          </button>
+
+          <div class="dropdown">
+            <button onclick="bringForwardTool()">
+              Forward Layer
+            </button>
+            <button onclick="sendBackwardTool()">
+              Backward Layer
+            </button>
+          </div>
+        </div>
+        <div class="menu">
+          <button class="menu-button">
+            Edit
+          </button>
+          <div class="dropdown">
+            <button onclick="undoTool()">
+              Undo
+            </button>
+            <button onclick="redoTool()">
+              Redo
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <aside id="left-sidebar">
             <button id="selection-tool" class="tool-icon tool-active" onclick="selectionTool()" title="Selection Tool">
                 <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13.64 21.97C13.14 22.21 12.54 22 12.31 21.5L10.13 16.76L6.47 19.82C6.1 20.13 5.55 20 5.27 19.6C5.1 19.37 5 19.09 5 18.8V3.5C5 2.95 5.45 2.5 6 2.5C6.26 2.5 6.51 2.6 6.7 2.78L19.22 13.56C19.63 13.91 19.68 14.54 19.33 14.95C19.14 15.17 18.86 15.3 18.57 15.3H14.18L16.36 20.04C16.59 20.54 16.38 21.14 15.88 21.37L13.64 21.97Z"/>
@@ -24,24 +72,13 @@
                   <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
                 </svg>
             </button>
-            <button id="bring-forward-tool" onclick="bringForwardTool()">
-              Bring Forward
-            </button>
-            <button id="send-backward-tool" onclick="sendBackwardTool()">
-                Send Backward
-            </button>
-            <button id="undo-tool" onclick="undoTool()">
-              Undo
-            </button>
-            <button id="redo-tool" onclick="redoTool()">
-              Redo
-            </button>
-          </aside>
-          <div id="middle-area">
-              <canvas id="photo-area"></canvas>
-          </div>
-          <aside id="right-sidebar">
-          </aside>
-      </main>
+      </aside>
+      <div id="middle-area">
+        <canvas id="photo-area"></canvas>
+      </div>
+      <aside id="right-sidebar">
+      </aside>
+    </main>
+    <input type="file" id="image-input" accept="image/*"  hidden>
   </body>
 </html>

@@ -1,0 +1,641 @@
+[1mdiff --git a/resources/js/main.js b/resources/js/main.js[m
+[1mindex 617d03e..206c618 100644[m
+[1m--- a/resources/js/main.js[m
+[1m+++ b/resources/js/main.js[m
+[36m@@ -6,3 +6,9 @@[m [mNeutralino.init();[m
+ Neutralino.events.on("windowClose", onWindowClose);[m
+ [m
+ const canvas = new fabric.Canvas("photo-area");[m
+[32m+[m
+[32m+[m[32mconst selectionTool = document.getElementById('selection-tool');[m
+[32m+[m
+[32m+[m[32mselectionTool?.addEventListener('click', () => {[m
+[32m+[m[32m  setActiveTool('select');[m
+[32m+[m[32m});[m
+[1mdiff --git a/resources/js/neutralino.d.ts b/resources/js/neutralino.d.ts[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fbe7cbf[m
+[1m--- /dev/null[m
+[1m+++ b/resources/js/neutralino.d.ts[m
+[36m@@ -0,0 +1,621 @@[m
+[32m+[m[32mexport declare enum LoggerType {[m
+[32m+[m	[32mWARNING = "WARNING",[m
+[32m+[m	[32mERROR = "ERROR",[m
+[32m+[m	[32mINFO = "INFO"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum Icon {[m
+[32m+[m	[32mWARNING = "WARNING",[m
+[32m+[m	[32mERROR = "ERROR",[m
+[32m+[m	[32mINFO = "INFO",[m
+[32m+[m	[32mQUESTION = "QUESTION"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum MessageBoxChoice {[m
+[32m+[m	[32mOK = "OK",[m
+[32m+[m	[32mOK_CANCEL = "OK_CANCEL",[m
+[32m+[m	[32mYES_NO = "YES_NO",[m
+[32m+[m	[32mYES_NO_CANCEL = "YES_NO_CANCEL",[m
+[32m+[m	[32mRETRY_CANCEL = "RETRY_CANCEL",[m
+[32m+[m	[32mABORT_RETRY_IGNORE = "ABORT_RETRY_IGNORE"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum ClipboardFormat {[m
+[32m+[m	[32munknown = "unknown",[m
+[32m+[m	[32mtext = "text",[m
+[32m+[m	[32mimage = "image"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum Mode {[m
+[32m+[m	[32mwindow = "window",[m
+[32m+[m	[32mbrowser = "browser",[m
+[32m+[m	[32mcloud = "cloud",[m
+[32m+[m	[32mchrome = "chrome"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum OperatingSystem {[m
+[32m+[m	[32mLinux = "Linux",[m
+[32m+[m	[32mWindows = "Windows",[m
+[32m+[m	[32mDarwin = "Darwin",[m
+[32m+[m	[32mFreeBSD = "FreeBSD",[m
+[32m+[m	[32mUnknown = "Unknown"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum Architecture {[m
+[32m+[m	[32mx64 = "x64",[m
+[32m+[m	[32marm = "arm",[m
+[32m+[m	[32mitanium = "itanium",[m
+[32m+[m	[32mia32 = "ia32",[m
+[32m+[m	[32munknown = "unknown"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum SendKeyState {[m
+[32m+[m	[32mpress = "press",[m
+[32m+[m	[32mdown = "down",[m
+[32m+[m	[32mup = "up"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum NetworkFamily {[m
+[32m+[m	[32mipv4 = "ipv4",[m
+[32m+[m	[32mipv6 = "ipv6"[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare enum AccessMode {[m
+[32m+[m	[32mF_OK = 0,[m
+[32m+[m	[32mR_OK = 4,[m
+[32m+[m	[32mW_OK = 2,[m
+[32m+[m	[32mX_OK = 1[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface DirectoryEntry {[m
+[32m+[m	[32mentry: string;[m
+[32m+[m	[32mpath: string;[m
+[32m+[m	[32mtype: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface FileReaderOptions {[m
+[32m+[m	[32mpos: number;[m
+[32m+[m	[32msize: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface DirectoryReaderOptions {[m
+[32m+[m	[32mrecursive: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface OpenedFile {[m
+[32m+[m	[32mid: number;[m
+[32m+[m	[32meof: boolean;[m
+[32m+[m	[32mpos: number;[m
+[32m+[m	[32mlastRead: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Stats {[m
+[32m+[m	[32msize: number;[m
+[32m+[m	[32misFile: boolean;[m
+[32m+[m	[32misDirectory: boolean;[m
+[32m+[m	[32mcreatedAt: number;[m
+[32m+[m	[32mmodifiedAt: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Watcher {[m
+[32m+[m	[32mid: number;[m
+[32m+[m	[32mpath: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface CopyOptions {[m
+[32m+[m	[32mrecursive: boolean;[m
+[32m+[m	[32moverwrite: boolean;[m
+[32m+[m	[32mskip: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface PathParts {[m
+[32m+[m	[32mrootName: string;[m
+[32m+[m	[32mrootDirectory: string;[m
+[32m+[m	[32mrootPath: string;[m
+[32m+[m	[32mrelativePath: string;[m
+[32m+[m	[32mparentPath: string;[m
+[32m+[m	[32mfilename: string;[m
+[32m+[m	[32mstem: string;[m
+[32m+[m	[32mextension: string;[m
+[32m+[m[32m}[m
+[32m+[m[32minterface Permissions$1 {[m
+[32m+[m	[32mall: boolean;[m
+[32m+[m	[32mownerAll: boolean;[m
+[32m+[m	[32mownerRead: boolean;[m
+[32m+[m	[32mownerWrite: boolean;[m
+[32m+[m	[32mownerExec: boolean;[m
+[32m+[m	[32mgroupAll: boolean;[m
+[32m+[m	[32mgroupRead: boolean;[m
+[32m+[m	[32mgroupWrite: boolean;[m
+[32m+[m	[32mgroupExec: boolean;[m
+[32m+[m	[32mothersAll: boolean;[m
+[32m+[m	[32mothersRead: boolean;[m
+[32m+[m	[32mothersWrite: boolean;[m
+[32m+[m	[32mothersExec: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport type PermissionsMode = "ADD" | "REPLACE" | "REMOVE";[m
+[32m+[m[32mdeclare function createDirectory(path: string): Promise<void>;[m
+[32m+[m[32mdeclare function remove(path: string): Promise<void>;[m
+[32m+[m[32mdeclare function writeFile(path: string, data: string): Promise<void>;[m
+[32m+[m[32mdeclare function appendFile(path: string, data: string): Promise<void>;[m
+[32m+[m[32mdeclare function writeBinaryFile(path: string, data: ArrayBuffer): Promise<void>;[m
+[32m+[m[32mdeclare function appendBinaryFile(path: string, data: ArrayBuffer): Promise<void>;[m
+[32m+[m[32mdeclare function readFile(path: string, options?: FileReaderOptions): Promise<string>;[m
+[32m+[m[32mdeclare function readBinaryFile(path: string, options?: FileReaderOptions): Promise<ArrayBuffer>;[m
+[32m+[m[32mdeclare function openFile(path: string): Promise<number>;[m
+[32m+[m[32mdeclare function createWatcher(path: string): Promise<number>;[m
+[32m+[m[32mdeclare function removeWatcher(id: number): Promise<number>;[m
+[32m+[m[32mdeclare function getWatchers(): Promise<Watcher[]>;[m
+[32m+[m[32mdeclare function updateOpenedFile(id: number, event: string, data?: any): Promise<void>;[m
+[32m+[m[32mdeclare function getOpenedFileInfo(id: number): Promise<OpenedFile>;[m
+[32m+[m[32mdeclare function readDirectory(path: string, options?: DirectoryReaderOptions): Promise<DirectoryEntry[]>;[m
+[32m+[m[32mdeclare function copy(source: string, destination: string, options?: CopyOptions): Promise<void>;[m
+[32m+[m[32mdeclare function move(source: string, destination: string): Promise<void>;[m
+[32m+[m[32mdeclare function getStats(path: string): Promise<Stats>;[m
+[32m+[m[32mdeclare function getAbsolutePath(path: string): Promise<string>;[m
+[32m+[m[32mdeclare function getRelativePath(path: string, base?: string): Promise<string>;[m
+[32m+[m[32mdeclare function getPathParts(path: string): Promise<PathParts>;[m
+[32m+[m[32mdeclare function getPermissions(path: string): Promise<Permissions$1>;[m
+[32m+[m[32mdeclare function setPermissions(path: string, permissions: Permissions$1, mode: PermissionsMode): Promise<void>;[m
+[32m+[m[32mdeclare function getJoinedPath(...paths: string[]): Promise<string>;[m
+[32m+[m[32mdeclare function getNormalizedPath(path: string): Promise<string>;[m
+[32m+[m[32mdeclare function getUnnormalizedPath(path: string): Promise<string>;[m
+[32m+[m[32mdeclare function access(path: string, mode?: number): Promise<string>;[m
+[32m+[m[32mdeclare function chmod(path: string, mode: number): Promise<string>;[m
+[32m+[m[32mdeclare function chown(path: string, uid: number, gid: number): Promise<string>;[m
+[32m+[m[32mexport interface ExecCommandOptions {[m
+[32m+[m	[32mstdIn?: string;[m
+[32m+[m	[32mbackground?: boolean;[m
+[32m+[m	[32mcwd?: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface ExecCommandResult {[m
+[32m+[m	[32mpid: number;[m
+[32m+[m	[32mstdOut: string;[m
+[32m+[m	[32mstdErr: string;[m
+[32m+[m	[32mexitCode: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface SpawnedProcess {[m
+[32m+[m	[32mid: number;[m
+[32m+[m	[32mpid: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface SpawnedProcessOptions {[m
+[32m+[m	[32mcwd?: string;[m
+[32m+[m	[32menvs?: Record<string, string>;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Envs {[m
+[32m+[m	[32m[key: string]: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface OpenDialogOptions {[m
+[32m+[m	[32mmultiSelections?: boolean;[m
+[32m+[m	[32mfilters?: Filter[];[m
+[32m+[m	[32mdefaultPath?: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface FolderDialogOptions {[m
+[32m+[m	[32mdefaultPath?: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface SaveDialogOptions {[m
+[32m+[m	[32mforceOverwrite?: boolean;[m
+[32m+[m	[32mfilters?: Filter[];[m
+[32m+[m	[32mdefaultPath?: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Filter {[m
+[32m+[m	[32mname: string;[m
+[32m+[m	[32mextensions: string[];[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface TrayOptions {[m
+[32m+[m	[32micon: string;[m
+[32m+[m	[32mmenuItems: TrayMenuItem[];[m
+[32m+[m	[32museTemplateIcon?: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface TrayMenuItem {[m
+[32m+[m	[32mid?: string;[m
+[32m+[m	[32mtext: string;[m
+[32m+[m	[32misDisabled?: boolean;[m
+[32m+[m	[32misChecked?: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface LocaleInfo {[m
+[32m+[m	[32mlocale: string;[m
+[32m+[m	[32mlanguage: string;[m
+[32m+[m	[32mregion: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport type KnownPath = "config" | "data" | "cache" | "documents" | "pictures" | "music" | "video" | "downloads" | "savedGames1" | "savedGames2" | "temp";[m
+[32m+[m[32mdeclare function execCommand(command: string, options?: ExecCommandOptions): Promise<ExecCommandResult>;[m
+[32m+[m[32mdeclare function spawnProcess(command: string, options?: SpawnedProcessOptions): Promise<SpawnedProcess>;[m
+[32m+[m[32mdeclare function updateSpawnedProcess(id: number, event: string, data?: any): Promise<void>;[m
+[32m+[m[32mdeclare function getSpawnedProcesses(): Promise<SpawnedProcess[]>;[m
+[32m+[m[32mdeclare function getEnv(key: string): Promise<string>;[m
+[32m+[m[32mdeclare function setEnv(key: string, value: string): Promise<string>;[m
+[32m+[m[32mdeclare function getEnvs(): Promise<Envs>;[m
+[32m+[m[32mdeclare function showOpenDialog(title?: string, options?: OpenDialogOptions): Promise<string[]>;[m
+[32m+[m[32mdeclare function showFolderDialog(title?: string, options?: FolderDialogOptions): Promise<string>;[m
+[32m+[m[32mdeclare function showSaveDialog(title?: string, options?: SaveDialogOptions): Promise<string>;[m
+[32m+[m[32mdeclare function showNotification(title: string, content: string, icon?: Icon): Promise<void>;[m
+[32m+[m[32mdeclare function showMessageBox(title: string, content: string, choice?: MessageBoxChoice, icon?: Icon): Promise<string>;[m
+[32m+[m[32mdeclare function setTray(options: TrayOptions): Promise<void>;[m
+[32m+[m[32mdeclare function open$1(url: string): Promise<void>;[m
+[32m+[m[32mdeclare function getPath(name: KnownPath): Promise<string>;[m
+[32m+[m[32mdeclare function trashItem(path: string): Promise<string>;[m
+[32m+[m[32mdeclare function getLocaleInfo(): Promise<LocaleInfo>;[m
+[32m+[m[32mexport interface MemoryInfo {[m
+[32m+[m	[32mphysical: {[m
+[32m+[m		[32mtotal: number;[m
+[32m+[m		[32mavailable: number;[m
+[32m+[m	[32m};[m
+[32m+[m	[32mvirtual: {[m
+[32m+[m		[32mtotal: number;[m
+[32m+[m		[32mavailable: number;[m
+[32m+[m	[32m};[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface KernelInfo {[m
+[32m+[m	[32mvariant: string;[m
+[32m+[m	[32mversion: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface OSInfo {[m
+[32m+[m	[32mname: string;[m
+[32m+[m	[32mdescription: string;[m
+[32m+[m	[32mversion: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface CPUInfo {[m
+[32m+[m	[32mvendor: string;[m
+[32m+[m	[32mmodel: string;[m
+[32m+[m	[32mfrequency: number;[m
+[32m+[m	[32marchitecture: string;[m
+[32m+[m	[32mlogicalThreads: number;[m
+[32m+[m	[32mphysicalCores: number;[m
+[32m+[m	[32mphysicalUnits: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Display {[m
+[32m+[m	[32mid: number;[m
+[32m+[m	[32mresolution: Resolution;[m
+[32m+[m	[32mdpi: number;[m
+[32m+[m	[32mbpp: number;[m
+[32m+[m	[32mrefreshRate: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Disk {[m
+[32m+[m	[32mid: number;[m
+[32m+[m	[32mvendor: string;[m
+[32m+[m	[32mmodel: string;[m
+[32m+[m	[32mserial: string;[m
+[32m+[m	[32mtotal: number;[m
+[32m+[m	[32mfree: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface Resolution {[m
+[32m+[m	[32mwidth: number;[m
+[32m+[m	[32mheight: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface MousePosition {[m
+[32m+[m	[32mx: number;[m
+[32m+[m	[32my: number;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface NetworkInterfaceAddress {[m
+[32m+[m	[32maddress: string;[m
+[32m+[m	[32mmac: string;[m
+[32m+[m	[32misInternal: boolean;[m
+[32m+[m	[32mfamily: NetworkFamily;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface NetworkInterfaceInfo {[m
+[32m+[m	[32m[key: string]: NetworkInterfaceAddress;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function getMemoryInfo(): Promise<MemoryInfo>;[m
+[32m+[m[32mdeclare function getArch(): Promise<string>;[m
+[32m+[m[32mdeclare function getKernelInfo(): Promise<KernelInfo>;[m
+[32m+[m[32mdeclare function getOSInfo(): Promise<OSInfo>;[m
+[32m+[m[32mdeclare function getCPUInfo(): Promise<CPUInfo>;[m
+[32m+[m[32mdeclare function getDisplays(): Promise<Display[]>;[m
+[32m+[m[32mdeclare function getDisks(): Promise<Disk>;[m
+[32m+[m[32mdeclare function getHostname(): Promise<string>;[m
+[32m+[m[32mdeclare function getMousePosition(): Promise<MousePosition>;[m
+[32m+[m[32mdeclare function setMousePosition(x: number, y: number): Promise<void>;[m
+[32m+[m[32mdeclare function setMouseGrabbing(grabbing: boolean): Promise<void>;[m
+[32m+[m[32mdeclare function sendKey(key: number, state: SendKeyState): Promise<void>;[m
+[32m+[m[32mdeclare function getNetworkInterfaces(): Promise<NetworkInterfaceInfo>;[m
+[32m+[m[32mdeclare function getMachineId(): Promise<string>;[m
+[32m+[m[32mdeclare function setData(key: string, data: string | null): Promise<void>;[m
+[32m+[m[32mdeclare function getData(key: string): Promise<string>;[m
+[32m+[m[32mdeclare function removeData(key: string): Promise<void>;[m
+[32m+[m[32mdeclare function getKeys(): Promise<string[]>;[m
+[32m+[m[32mdeclare function clear(): Promise<void>;[m
+[32m+[m[32mdeclare function log(message: string, type?: LoggerType): Promise<void>;[m
+[32m+[m[32mexport interface OpenActionOptions {[m
+[32m+[m	[32murl: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface RestartOptions {[m
+[32m+[m	[32margs: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function exit(code?: number): Promise<void>;[m
+[32m+[m[32mdeclare function killProcess(): Promise<void>;[m
+[32m+[m[32mdeclare function restartProcess(options?: RestartOptions): Promise<void>;[m
+[32m+[m[32mdeclare function getConfig(): Promise<any>;[m
+[32m+[m[32mdeclare function broadcast(event: string, data?: any): Promise<void>;[m
+[32m+[m[32mdeclare function readProcessInput(readAll?: boolean): Promise<string>;[m
+[32m+[m[32mdeclare function writeProcessOutput(data: string): Promise<void>;[m
+[32m+[m[32mdeclare function writeProcessError(data: string): Promise<void>;[m
+[32m+[m[32mdeclare function getProcessId(): Promise<number>;[m
+[32m+[m[32mexport interface WindowOptions extends WindowSizeOptions, WindowPosOptions {[m
+[32m+[m	[32mtitle?: string;[m
+[32m+[m	[32micon?: string;[m
+[32m+[m	[32mfullScreen?: boolean;[m
+[32m+[m	[32malwaysOnTop?: boolean;[m
+[32m+[m	[32menableInspector?: boolean;[m
+[32m+[m	[32mborderless?: boolean;[m
+[32m+[m	[32mmaximize?: boolean;[m
+[32m+[m	[32mhidden?: boolean;[m
+[32m+[m	[32mmaximizable?: boolean;[m
+[32m+[m	[32museSavedState?: boolean;[m
+[32m+[m	[32mexitProcessOnClose?: boolean;[m
+[32m+[m	[32mextendUserAgentWith?: string;[m
+[32m+[m	[32minjectGlobals?: boolean;[m
+[32m+[m	[32minjectClientLibrary?: boolean;[m
+[32m+[m	[32minjectScript?: string;[m
+[32m+[m	[32mprocessArgs?: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface WindowSizeOptions {[m
+[32m+[m	[32mwidth?: number;[m
+[32m+[m	[32mheight?: number;[m
+[32m+[m	[32mminWidth?: number;[m
+[32m+[m	[32mminHeight?: number;[m
+[32m+[m	[32mmaxWidth?: number;[m
+[32m+[m	[32mmaxHeight?: number;[m
+[32m+[m	[32mresizable?: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface WindowPosOptions {[m
+[32m+[m	[32mx?: number;[m
+[32m+[m	[32my?: number;[m
+[32m+[m	[32mcenter?: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface WindowMenu extends Array<WindowMenuItem> {[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface WindowMenuItem {[m
+[32m+[m	[32mid?: string;[m
+[32m+[m	[32mtext: string;[m
+[32m+[m	[32maction?: string;[m
+[32m+[m	[32mshortcut?: string;[m
+[32m+[m	[32misDisabled?: boolean;[m
+[32m+[m	[32misChecked?: boolean;[m
+[32m+[m	[32mmenuItems?: WindowMenuItem[];[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function setTitle(title: string): Promise<void>;[m
+[32m+[m[32mdeclare function getTitle(): Promise<string>;[m
+[32m+[m[32mdeclare function maximize(): Promise<void>;[m
+[32m+[m[32mdeclare function unmaximize(): Promise<void>;[m
+[32m+[m[32mdeclare function isMaximized(): Promise<boolean>;[m
+[32m+[m[32mdeclare function minimize(): Promise<void>;[m
+[32m+[m[32mdeclare function unminimize(): Promise<void>;[m
+[32m+[m[32mdeclare function isMinimized(): Promise<boolean>;[m
+[32m+[m[32mdeclare function setFullScreen(): Promise<void>;[m
+[32m+[m[32mdeclare function exitFullScreen(): Promise<void>;[m
+[32m+[m[32mdeclare function isFullScreen(): Promise<boolean>;[m
+[32m+[m[32mdeclare function show(): Promise<void>;[m
+[32m+[m[32mdeclare function hide(): Promise<void>;[m
+[32m+[m[32mdeclare function isVisible(): Promise<boolean>;[m
+[32m+[m[32mdeclare function focus$1(): Promise<void>;[m
+[32m+[m[32mdeclare function setIcon(icon: string): Promise<void>;[m
+[32m+[m[32mdeclare function move$1(x: number, y: number): Promise<void>;[m
+[32m+[m[32mdeclare function center(): Promise<void>;[m
+[32m+[m[32mdeclare function beginDrag(screenX?: number, screenY?: number): Promise<void>;[m
+[32m+[m[32mdeclare function setDraggableRegion(DOMElementOrId: string | HTMLElement, options?: {[m
+[32m+[m	[32mexclude?: Array<string | HTMLElement>;[m
+[32m+[m[32m}): Promise<{[m
+[32m+[m	[32msuccess: true;[m
+[32m+[m	[32mmessage: string;[m
+[32m+[m	[32mexclusions: {[m
+[32m+[m		[32madd(elements: Array<string | HTMLElement>): void;[m
+[32m+[m		[32mremove(elements: Array<string | HTMLElement>): void;[m
+[32m+[m		[32mremoveAll(): void;[m
+[32m+[m	[32m};[m
+[32m+[m[32m}>;[m
+[32m+[m[32mdeclare function unsetDraggableRegion(DOMElementOrId: string | HTMLElement): Promise<{[m
+[32m+[m	[32msuccess: true;[m
+[32m+[m	[32mmessage: string;[m
+[32m+[m[32m}>;[m
+[32m+[m[32mdeclare function setSize(options: WindowSizeOptions): Promise<void>;[m
+[32m+[m[32mdeclare function getSize(): Promise<WindowSizeOptions>;[m
+[32m+[m[32mdeclare function getPosition(): Promise<WindowPosOptions>;[m
+[32m+[m[32mdeclare function setAlwaysOnTop(onTop: boolean): Promise<void>;[m
+[32m+[m[32mdeclare function setBorderless(borderless: boolean): Promise<void>;[m
+[32m+[m[32mdeclare function create(url: string, options?: WindowOptions): Promise<void>;[m
+[32m+[m[32mdeclare function snapshot(path: string): Promise<void>;[m
+[32m+[m[32mdeclare function setMainMenu(options: WindowMenu): Promise<void>;[m
+[32m+[m[32mdeclare function print$1(): Promise<void>;[m
+[32m+[m[32minterface Response$1 {[m
+[32m+[m	[32msuccess: boolean;[m
+[32m+[m	[32mmessage: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport type Builtin = "ready" | "trayMenuItemClicked" | "windowClose" | "serverOffline" | "clientConnect" | "clientDisconnect" | "appClientConnect" | "appClientDisconnect" | "extClientConnect" | "extClientDisconnect" | "extensionReady" | "neuDev_reloadApp";[m
+[32m+[m[32mdeclare function on(event: string, handler: (ev: CustomEvent) => void): Promise<Response$1>;[m
+[32m+[m[32mdeclare function off(event: string, handler: (ev: CustomEvent) => void): Promise<Response$1>;[m
+[32m+[m[32mdeclare function dispatch(event: string, data?: any): Promise<Response$1>;[m
+[32m+[m[32mdeclare function broadcast$1(event: string, data?: any): Promise<void>;[m
+[32m+[m[32mexport interface ExtensionStats {[m
+[32m+[m	[32mloaded: string[];[m
+[32m+[m	[32mconnected: string[];[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function dispatch$1(extensionId: string, event: string, data?: any): Promise<void>;[m
+[32m+[m[32mdeclare function broadcast$2(event: string, data?: any): Promise<void>;[m
+[32m+[m[32mdeclare function getStats$1(): Promise<ExtensionStats>;[m
+[32m+[m[32mexport interface Manifest {[m
+[32m+[m	[32mapplicationId: string;[m
+[32m+[m	[32mversion: string;[m
+[32m+[m	[32mresourcesURL: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function checkForUpdates(url: string): Promise<Manifest>;[m
+[32m+[m[32mdeclare function install(): Promise<void>;[m
+[32m+[m[32mexport interface ClipboardImage {[m
+[32m+[m	[32mwidth: number;[m
+[32m+[m	[32mheight: number;[m
+[32m+[m	[32mbpp: number;[m
+[32m+[m	[32mbpr: number;[m
+[32m+[m	[32mredMask: number;[m
+[32m+[m	[32mgreenMask: number;[m
+[32m+[m	[32mblueMask: number;[m
+[32m+[m	[32mredShift: number;[m
+[32m+[m	[32mgreenShift: number;[m
+[32m+[m	[32mblueShift: number;[m
+[32m+[m	[32mdata: ArrayBuffer;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function getFormat(): Promise<ClipboardFormat>;[m
+[32m+[m[32mdeclare function readText(): Promise<string>;[m
+[32m+[m[32mdeclare function readImage(format?: string): Promise<ClipboardImage | null>;[m
+[32m+[m[32mdeclare function writeText(data: string): Promise<void>;[m
+[32m+[m[32mdeclare function writeImage(image: ClipboardImage): Promise<void>;[m
+[32m+[m[32mdeclare function readHTML(): Promise<string>;[m
+[32m+[m[32mdeclare function writeHTML(data: string): Promise<void>;[m
+[32m+[m[32mdeclare function clear$1(): Promise<void>;[m
+[32m+[m[32minterface Stats$1 {[m
+[32m+[m	[32msize: number;[m
+[32m+[m	[32misFile: boolean;[m
+[32m+[m	[32misDirectory: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function getFiles(): Promise<string[]>;[m
+[32m+[m[32mdeclare function getStats$2(path: string): Promise<Stats$1>;[m
+[32m+[m[32mdeclare function extractFile(path: string, destination: string): Promise<void>;[m
+[32m+[m[32mdeclare function extractDirectory(path: string, destination: string): Promise<void>;[m
+[32m+[m[32mdeclare function readFile$1(path: string): Promise<string>;[m
+[32m+[m[32mdeclare function readBinaryFile$1(path: string): Promise<ArrayBuffer>;[m
+[32m+[m[32mdeclare function mount(path: string, target: string): Promise<void>;[m
+[32m+[m[32mdeclare function unmount(path: string): Promise<void>;[m
+[32m+[m[32mdeclare function getMounts(): Promise<Record<string, string>>;[m
+[32m+[m[32mexport interface NetHeaders {[m
+[32m+[m	[32m[key: string]: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface NetParams {[m
+[32m+[m	[32m[key: string]: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface NetRequestOptions {[m
+[32m+[m	[32mtimeout?: boolean;[m
+[32m+[m	[32mparams?: NetParams[];[m
+[32m+[m	[32mheaders?: NetHeaders[];[m
+[32m+[m	[32mauth?: {[m
+[32m+[m		[32musername: string;[m
+[32m+[m		[32mpassword: string;[m
+[32m+[m	[32m};[m
+[32m+[m	[32mencodePath: boolean;[m
+[32m+[m	[32mkeepAlive: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface NetResponse {[m
+[32m+[m	[32mstatus: number;[m
+[32m+[m	[32mstatusText: string;[m
+[32m+[m	[32mbody: string;[m
+[32m+[m	[32mheaders: NetHeaders[];[m
+[32m+[m	[32mcookies: string;[m
+[32m+[m	[32mlocation: string;[m
+[32m+[m	[32mversion: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare function request(url: string, method?: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function get(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function post(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function head(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function put(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function __delete(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function patch(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function options(url: string, options?: NetRequestOptions): Promise<NetResponse>;[m
+[32m+[m[32mdeclare function getMethods(): Promise<string[]>;[m
+[32m+[m[32mexport interface InitOptions {[m
+[32m+[m	[32mexportCustomMethods?: boolean;[m
+[32m+[m[32m}[m
+[32m+[m[32mexport declare function init(options?: InitOptions): void;[m
+[32m+[m[32mexport type ErrorCode = "NE_FS_DIRCRER" | "NE_FS_RMDIRER" | "NE_FS_FILRDER" | "NE_FS_FILWRER" | "NE_FS_FILRMER" | "NE_FS_NOPATHE" | "NE_FS_COPYFER" | "NE_FS_MOVEFER" | "NE_OS_INVMSGA" | "NE_OS_INVKNPT" | "NE_ST_INVSTKY" | "NE_ST_STKEYWE" | "NE_RT_INVTOKN" | "NE_RT_NATPRME" | "NE_RT_APIPRME" | "NE_RT_NATRTER" | "NE_RT_NATNTIM" | "NE_CL_NSEROFF" | "NE_EX_EXTNOTC" | "NE_UP_CUPDMER" | "NE_UP_CUPDERR" | "NE_UP_UPDNOUF" | "NE_UP_UPDINER";[m
+[32m+[m[32minterface Error$1 {[m
+[32m+[m	[32mcode: ErrorCode;[m
+[32m+[m	[32mmessage: string;[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare global {[m
+[32m+[m	[32minterface Window {[m
+[32m+[m		[32m/** Mode of the application: window, browser, cloud, or chrome */[m
+[32m+[m		[32mNL_MODE: Mode;[m
+[32m+[m		[32m/** Application port */[m
+[32m+[m		[32mNL_PORT: number;[m
+[32m+[m		[32m/** Command-line arguments */[m
+[32m+[m		[32mNL_ARGS: string[];[m
+[32m+[m		[32m/** Basic authentication token */[m
+[32m+[m		[32mNL_TOKEN: string;[m
+[32m+[m		[32m/** Neutralinojs client version */[m
+[32m+[m		[32mNL_CVERSION: string;[m
+[32m+[m		[32m/** Application identifier */[m
+[32m+[m		[32mNL_APPID: string;[m
+[32m+[m		[32m/** Application version */[m
+[32m+[m		[32mNL_APPVERSION: string;[m
+[32m+[m		[32m/** Application path */[m
+[32m+[m		[32mNL_PATH: string;[m
+[32m+[m		[32m/** Application data path */[m
+[32m+[m		[32mNL_DATAPATH: string;[m
+[32m+[m		[32m/** Returns true if extensions are enabled */[m
+[32m+[m		[32mNL_EXTENABLED: boolean;[m
+[32m+[m		[32m/** Returns true if the client library is injected */[m
+[32m+[m		[32mNL_GINJECTED: boolean;[m
+[32m+[m		[32m/** Returns true if globals are injected */[m
+[32m+[m		[32mNL_CINJECTED: boolean;[m
+[32m+[m		[32m/** Operating system name: Linux, Windows, Darwin, FreeBSD, or Uknown */[m
+[32m+[m		[32mNL_OS: OperatingSystem;[m
+[32m+[m		[32m/** CPU architecture: x64, arm, itanium, ia32, or unknown */[m
+[32m+[m		[32mNL_ARCH: Architecture;[m
+[32m+[m		[32m/** Neutralinojs server version */[m
+[32m+[m		[32mNL_VERSION: string;[m
+[32m+[m		[32m/** Current working directory */[m
+[32m+[m		[32mNL_CWD: string;[m
+[32m+[m		[32m/** Identifier of the current process */[m
+[32m+[m		[32mNL_PID: string;[m
+[32m+[m		[32m/** Source of application resources: bundle or directory */[m
+[32m+[m		[32mNL_RESMODE: string;[m
+[32m+[m		[32m/** Release commit of the client library */[m
+[32m+[m		[32mNL_CCOMMIT: string;[m
+[32m+[m		[32m/** An array of custom methods */[m
+[32m+[m		[32mNL_CMETHODS: string[];[m
+[32m+[m	[32m}[m
+[32m+[m	[32m/** Neutralino global object for custom methods **/[m
+[32m+[m	[32mconst Neutralino: any;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mdeclare namespace custom {[m
+[32m+[m	[32mexport { getMethods };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace filesystem {[m
+[32m+[m	[32mexport { access, appendBinaryFile, appendFile, chmod, chown, copy, createDirectory, createWatcher, getAbsolutePath, getJoinedPath, getNormalizedPath, getOpenedFileInfo, getPathParts, getPermissions, getRelativePath, getStats, getUnnormalizedPath, getWatchers, move, openFile, readBinaryFile, readDirectory, readFile, remove, removeWatcher, setPermissions, updateOpenedFile, writeBinaryFile, writeFile };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace os {[m
+[32m+[m	[32mexport { execCommand, getEnv, getEnvs, getLocaleInfo, getPath, getSpawnedProcesses, open$1 as open, setEnv, setTray, showFolderDialog, showMessageBox, showNotification, showOpenDialog, showSaveDialog, spawnProcess, trashItem, updateSpawnedProcess };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace computer {[m
+[32m+[m	[32mexport { getArch, getCPUInfo, getDisks, getDisplays, getHostname, getKernelInfo, getMachineId, getMemoryInfo, getMousePosition, getNetworkInterfaces, getOSInfo, sendKey, setMouseGrabbing, setMousePosition };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace storage {[m
+[32m+[m	[32mexport { clear, getData, getKeys, removeData, setData };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace debug {[m
+[32m+[m	[32mexport { log };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace app {[m
+[32m+[m	[32mexport { broadcast, exit, getConfig, getProcessId, killProcess, readProcessInput, restartProcess, writeProcessError, writeProcessOutput };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace window$1 {[m
+[32m+[m	[32mexport { beginDrag, center, create, exitFullScreen, focus$1 as focus, getPosition, getSize, getTitle, hide, isFullScreen, isMaximized, isMinimized, isVisible, maximize, minimize, move$1 as move, print$1 as print, setAlwaysOnTop, setBorderless, setDraggableRegion, setFullScreen, setIcon, setMainMenu, setSize, setTitle, show, snapshot, unmaximize, unminimize, unsetDraggableRegion };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace events {[m
+[32m+[m	[32mexport { broadcast$1 as broadcast, dispatch, off, on };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace extensions {[m
+[32m+[m	[32mexport { broadcast$2 as broadcast, dispatch$1 as dispatch, getStats$1 as getStats };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace updater {[m
+[32m+[m	[32mexport { checkForUpdates, install };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace clipboard {[m
+[32m+[m	[32mexport { clear$1 as clear, getFormat, readHTML, readImage, readText, writeHTML, writeImage, writeText };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace resources {[m
+[32m+[m	[32mexport { extractDirectory, extractFile, getFiles, getStats$2 as getStats, readBinaryFile$1 as readBinaryFile, readFile$1 as readFile };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace server {[m
+[32m+[m	[32mexport { getMounts, mount, unmount };[m
+[32m+[m[32m}[m
+[32m+[m[32mdeclare namespace net {[m
+[32m+[m	[32mexport { __delete as delete, get, head, options, patch, post, put, request };[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mexport {[m
+[32m+[m	[32mError$1 as Error,[m
+[32m+[m	[32mPermissions$1 as Permissions,[m
+[32m+[m	[32mResponse$1 as Response,[m
+[32m+[m	[32mapp,[m
+[32m+[m	[32mclipboard,[m
+[32m+[m	[32mcomputer,[m
+[32m+[m	[32mcustom,[m
+[32m+[m	[32mdebug,[m
+[32m+[m	[32mevents,[m
+[32m+[m	[32mextensions,[m
+[32m+[m	[32mfilesystem,[m
+[32m+[m	[32mnet,[m
+[32m+[m	[32mos,[m
+[32m+[m	[32mresources,[m
+[32m+[m	[32mserver,[m
+[32m+[m	[32mstorage,[m
+[32m+[m	[32mupdater,[m
+[32m+[m	[32mwindow$1 as window,[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mexport as namespace Neutralino;[m
+[32m+[m
+[32m+[m[32mexport {};[m
