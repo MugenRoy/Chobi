@@ -74,3 +74,78 @@ main {
 .icon:hover {
   color: #ffffff;
 }
+
+header {
+    height: 42px;
+    width: 100%;
+    background-color: var(--top-bar-color);
+    border-bottom: 1px solid var(--border-color);
+
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menu {
+    position: relative;
+    height: 100%;
+}
+
+.menu-button {
+    height: 100%;
+
+    padding: 0 15px;
+
+    border: none;
+    background: transparent;
+
+    color: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+
+    position: absolute;
+
+    top: 42px;
+    left: 0;
+
+    min-width: 170px;
+
+    background-color: var(--dropdown-color);
+
+    border: 1px solid var(--border-color);
+
+    z-index: 1000;
+}
+
+.menu:hover .dropdown {
+    display: block;
+}
+
+.dropdown button {
+    display: block;
+
+    width: 100%;
+
+    padding: 9px 14px;
+
+    border: none;
+
+    color: var(--text-color);
+
+    text-align: left;
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
