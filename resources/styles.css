@@ -31,7 +31,6 @@ main {
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
 }
 
 
@@ -58,16 +57,16 @@ main {
     background: transparent;
     border: none;
     cursor: pointer;
-    margin-bottom: 20px;
+    padding: 10px 5px;
+}
+
+.tool-icon:hover {
+    background-color: var(--border-color);
 }
 
 .icon {
   width: 20px;
   height: 20px;
-}
-
-.icon:hover {
-  color: #ffffff;
 }
 
 header {
