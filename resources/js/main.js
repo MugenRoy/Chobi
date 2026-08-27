@@ -1,18 +1,3 @@
-function onWindowClose() {
-    Neutralino.app.exit();
-}
-
-Neutralino.init();
-Neutralino.events.on("windowClose", onWindowClose);
-
-const properties = {
-    width: window.innerWidth * 0.65,
-    height: window.innerHeight * 0.75,
-    isDrawingMode: false
-};
-
-const canvas = new fabric.Canvas("photo-area", properties);
-
 let undoStack = [];
 let redoStack = [];
 
@@ -22,26 +7,22 @@ let isRestoringState = false;
 
 function selectionTool() {
     canvas.isDrawingMode = false;
+    canvas.selection = true;
+
     activeTool = "selection";
 
-    const selection = document.getElementById("selection-tool");
-    const draw = document.getElementById("draw-tool");
 
-    selection.classList.add("tool-active");
-    draw.classList.remove("tool-active");
+    tools.select.classList.add("tool-active");
+    tools.draw.classList.remove("tool-active");
 
-    canvas.selection = true;
 }
 
 function drawTool() {
     canvas.isDrawingMode = true;
     activeTool = "draw";
 
-    const selection = document.getElementById("selection-tool");
-    const draw = document.getElementById("draw-tool");
-
-    draw.classList.add("tool-active");
-    selection.classList.remove("tool-active");
+    tools.draw.classList.add("tool-active");
+    tools.select.classList.remove("tool-active");
 
     canvas.discardActiveObject();
     canvas.renderAll();

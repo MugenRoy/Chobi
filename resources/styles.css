@@ -58,12 +58,7 @@ main {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #858585;
     margin-bottom: 20px;
-}
-
-.tool-active {
-  color: #ffffff;
 }
 
 .icon {
@@ -148,4 +143,3 @@ nav {
 
     cursor: pointer;
 }
-
