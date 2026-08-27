@@ -13,11 +13,18 @@ const properties = {
 
 const canvas = new fabric.Canvas("whiteboard", properties);
 
-function el(id) {
+function get(id) {
     return document.getElementById(id);
 }
 
 const tools = {
-    select: el("selection-tool"),
-    draw: el("draw-tool")
+    select: get("selection-tool"),
+    pencil: get("pencil-tool"),
+    draw: get("draw-tool"),
+    fill: get("fill-tool"),
+    eraser: get("eraser-tool"),
+    text: get("text-tool"),
+    shapes: get("shapes-tool"),
+    crop: get("crop-tool"),
+    filter: get("filter-tool"),
 };
