@@ -50,15 +50,9 @@ function deleteSelected() {
 }
 
 document.addEventListener("keydown", (event) => {
-    const isCtrlOrCmd = event.ctrlKey || event.metaKey;
     switch (event.code) {
         case "Delete": {
             deleteSelected();
-            break;
-        }
-        case isCtrlOrCmd && event.code === "KeyD": {
-            event.preventDefault();
-            console.log("Test");
             break;
         }
         default: {
