@@ -5,8 +5,8 @@
 }
 
 :root {
-    --bg-color: #1e1f22;
-    --border-color: #383a3e;
+    --bg-color: #18191c;
+    --border-color: #303136;
 }
 
 body {
@@ -26,11 +26,20 @@ main {
 }
 
 #left-sidebar {
-    height: 100vh;
-    width: clamp(50px, 3.5vw, 80px);
-    border-right: 1px solid var(--border-color);
+    width: 64px;
+    min-width: 64px;
+
+    height: calc(100vh - 42px);
+
+    padding: 12px 8px;
+
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    background-color: var(--bg-color);
+
+    border-right: 1px solid var(--border-color);
 }
 
 #middle-area {
@@ -52,26 +61,55 @@ main {
 }
 
 .tool-icon {
-    width: 100%;
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+    min-height: 42px;
+
+    margin: 3px 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
     background: transparent;
-    border: none;
+
     cursor: pointer;
-    padding: 10px 5px;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.1s ease;
 }
 
 .tool-icon:hover {
-    background-color: var(--border-color);
+    background-color: #27282c;
+
+    border-color: #34353a;
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
+
+    opacity: 0.65;
+
+    transition:
+        opacity 0.15s ease,
+        filter 0.15s ease;
 }
 
 header {
     height: 42px;
     width: 100%;
-    background-color: var(--top-bar-color);
+    background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
 
     display: flex;
@@ -114,7 +152,7 @@ nav {
 
     min-width: 170px;
 
-    background-color: var(--dropdown-color);
+    background-color: var(--bg-color);
 
     border: 1px solid var(--border-color);
 
