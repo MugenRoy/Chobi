@@ -47,6 +47,183 @@ function drawTool() {
     canvas.renderAll();
 }
 
+let lineStartPoint = null;
+let activeLine = null;
+
+function lineTool() {
+
+    activeTool = "line";
+
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    canvas.discardActiveObject();
+    canvas.renderAll();
+
+    const selection = document.getElementById("selection-tool");
+    const draw = document.getElementById("draw-tool");
+    const line = document.getElementById("line-tool");
+    const text = document.getElementById("text-tool");
+
+    selection.classList.remove("tool-active");
+    draw.classList.remove("tool-active");
+    line.classList.add("tool-active");
+    text.classList.remove("tool-active");
+
+    canvas.defaultCursor = "crosshair";
+
+    canvas.off("mouse:down", startLine);
+    canvas.off("mouse:move", drawLine);
+    canvas.off("mouse:up", finishLine);
+
+    canvas.on("mouse:down", startLine);
+    canvas.on("mouse:move", drawLine);
+    canvas.on("mouse:up", finishLine);
+}
+
+
+function startLine(event) {
+
+    if (activeTool !== "line") {
+        return;
+    }
+
+    const pointer = canvas.getPointer(event.e);
+
+    lineStartPoint = {
+        x: pointer.x,
+        y: pointer.y
+    };
+
+    activeLine = new fabric.Line(
+        [
+            pointer.x,
+            pointer.y,
+            pointer.x,
+            pointer.y
+        ],
+        {
+            stroke: "#000000",
+            strokeWidth: 2,
+            selectable: false,
+            evented: false
+        }
+    );
+
+    canvas.add(activeLine);
+}
+
+
+function drawLine(event) {
+
+    if (
+        activeTool !== "line" ||
+        !activeLine ||
+        !lineStartPoint
+    ) {
+        return;
+    }
+
+    const pointer = canvas.getPointer(event.e);
+
+    activeLine.set({
+        x2: pointer.x,
+        y2: pointer.y
+    });
+
+    canvas.renderAll();
+}
+
+
+function finishLine(event) {
+
+    if (
+        activeTool !== "line" ||
+        !activeLine
+    ) {
+        return;
+    }
+
+    activeLine.set({
+        selectable: true,
+        evented: true
+    });
+
+    canvas.setActiveObject(activeLine);
+
+    activeLine = null;
+    lineStartPoint = null;
+
+    canvas.renderAll();
+
+    saveCanvasState();
+}
+
+function textTool() {
+
+    activeTool = "text";
+
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    canvas.discardActiveObject();
+    canvas.renderAll();
+
+    const selection = document.getElementById("selection-tool");
+    const draw = document.getElementById("draw-tool");
+    const line = document.getElementById("line-tool");
+    const text = document.getElementById("text-tool");
+
+    selection.classList.remove("tool-active");
+    draw.classList.remove("tool-active");
+    line.classList.remove("tool-active");
+    text.classList.add("tool-active");
+
+    canvas.defaultCursor = "text";
+
+    canvas.off("mouse:down", addText);
+    canvas.on("mouse:down", addText);
+}
+
+
+function addText(event) {
+
+    if (activeTool !== "text") {
+        return;
+    }
+
+    const pointer = canvas.getPointer(event.e);
+
+    const textObject = new fabric.IText(
+        "Text",
+        {
+            left: pointer.x,
+            top: pointer.y,
+
+            fill: "#000000",
+
+            fontSize: 24,
+
+            fontFamily: "Arial",
+
+            editable: true,
+
+            selectable: true
+        }
+    );
+
+    canvas.add(textObject);
+
+    canvas.setActiveObject(textObject);
+
+    textObject.enterEditing();
+    textObject.selectAll();
+
+    canvas.renderAll();
+
+    saveCanvasState();
+}
+
 function getCanvasState() {
     return JSON.stringify(canvas.toJSON());
 }
