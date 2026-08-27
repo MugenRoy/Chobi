@@ -33,7 +33,6 @@ main {
     flex-direction: column;
 }
 
-
 #middle-area {
     height: 100%;
     flex: 1;
@@ -42,7 +41,7 @@ main {
     align-items: center;
 }
 
-#photo-area {
+#whiteboard {
     background-color: white;
 }
 

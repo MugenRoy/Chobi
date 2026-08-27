@@ -42,7 +42,7 @@
         </nav>
       </header>
       <main>
-          <aside id="left-sidebar">
+          <div id="left-sidebar">
             <button id="selection-tool" class="tool-icon" onclick="selectionTool()" title="Selection Tool">
                 <img class="icon" src="/icons/tools/select.svg">
             </button>
@@ -58,18 +58,24 @@
             <button id="eraser-tool" class="tool-icon" onclick="" title="Eraser">
                 <img class="icon" src="/icons/tools/eraser.svg">
             </button>
-            <button id="text-tool" class="tool-icon" onclick="" title="Add Text">
+            <button id="text-tool" class="tool-icon" onclick="addText()" title="Add Text">
                 <img class="icon" src="/icons/tools/text.svg">
             </button>
             <button id="shapes-tool" class="tool-icon" onclick="" title="Add Shapes">
                 <img class="icon" src="/icons/tools/shapes.svg">
             </button>
-          </aside>
-          <div id="middle-area">
-              <canvas id="photo-area"></canvas>
+            <button id="crop-tool" class="tool-icon" onclick="" title="Crop">
+                <img class="icon" src="/icons/tools/crop.svg">
+            </button>
+            <button id="filter-tool" class="tool-icon" onclick="" title="Color Filters">
+                <img class="icon" src="/icons/tools/filters.svg">
+            </button>
           </div>
-          <aside id="right-sidebar">
-          </aside>
+          <div id="middle-area">
+              <canvas id="whiteboard"></canvas>
+          </div>
+          <div id="right-sidebar">
+          </div>
       </main>
   </body>
 </html>

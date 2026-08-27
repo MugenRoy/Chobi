@@ -11,7 +11,7 @@ const properties = {
     isDrawingMode: false
 };
 
-const canvas = new fabric.Canvas("photo-area", properties);
+const canvas = new fabric.Canvas("whiteboard", properties);
 
 function el(id) {
     return document.getElementById(id);
