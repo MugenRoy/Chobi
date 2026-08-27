@@ -19,8 +19,52 @@ body {
     overflow: hidden;
 }
 
-main {
+#setup {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+#setup-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13vw;
+}
+
+#setup-top h1 {
+    color: white;
+    font-family: "Poppins", monospace;
+    font-size: 5rem;
+}
+
+#setup-bottom {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 13vw;
+}
+
+#setup-bottom button {
+    padding: 5px 10px;
+    background-color: #F2CD5D;
+    color: black;
+    border-radius: 2px;
+    font-family: "Poppins", monospace;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#setup-bottom button:hover {
+    background-color: #F7E2A1;
+}
+
+main {
+    display: none;
     height: 100vh;
     width: 100vw;
 }
@@ -74,7 +118,7 @@ header {
     background-color: var(--top-bar-color);
     border-bottom: 1px solid var(--border-color);
 
-    display: flex;
+    display: none;
     align-items: center;
 }
 

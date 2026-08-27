@@ -50,13 +50,10 @@ function deleteSelected() {
 }
 
 document.addEventListener("keydown", (event) => {
-    switch (event.code) {
-        case "Delete": {
-            deleteSelected();
-            break;
-        }
-        default: {
-            break;
-        }
+    if (event.code == "Delete") {
+        deleteSelected();
+    }
+    else if (event.code == "KeyD" && event.ctrlKey) {
+        // duplicateSelected(); -> Implement later
     }
 });

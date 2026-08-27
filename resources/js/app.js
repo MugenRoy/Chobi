@@ -5,6 +5,19 @@ function onWindowClose() {
 Neutralino.init();
 Neutralino.events.on("windowClose", onWindowClose);
 
+function get(id) {
+    return document.getElementById(id);
+}
+
+function createImage() {
+    const header = document.querySelector("header");
+    const main = document.querySelector("main");
+    header.style.display = "flex";
+    main.style.display = "flex";
+    const setup = get("setup");
+    setup.style.display = "none";
+}
+
 const properties = {
     width: window.innerWidth * 0.65,
     height: window.innerHeight * 0.75,
@@ -12,10 +25,6 @@ const properties = {
 };
 
 const canvas = new fabric.Canvas("whiteboard", properties);
-
-function get(id) {
-    return document.getElementById(id);
-}
 
 const tools = {
     select: get("selection-tool"),
