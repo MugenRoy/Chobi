@@ -13,18 +13,6 @@
   <body>
       <header>
         <nav>
-          <div class="menu">
-          <button class="menu-button">
-            Layer
-          </button>
-          <div class="dropdown">
-            <button id="bring-forward-tool" onclick="bringForwardTool()">
-              Forward Layer
-            </button>
-            <button id="send-backward-tool" onclick="sendBackwardTool()">
-              Backward Layer
-            </button>
-          </div>
         </div>
         <div class="menu">
           <button class="menu-button">
@@ -38,7 +26,12 @@
               Redo
             </button>
           </div>
-        </div>
+          </div>
+                  <div style="margin-left:auto;">
+              <button class="pbutton" onclick="exportImage()">
+                  Export
+              </button>
+          </div>
         </nav>
       </header>
       <div id="setup">
