@@ -1,10 +1,26 @@
 function selectionTool() {
     canvas.isDrawingMode = false;
     canvas.selection = true;
+
+    tools.select.style.backgroundColor = "var(--border-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "select") {
+            continue;
+        }
+        element.style.backgroundColor = "var(--bg-color)";
+    }
 }
 
 function drawTool() {
     canvas.isDrawingMode = true;
+    tools.draw.style.backgroundColor = "var(--border-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "draw") {
+            continue;
+        }
+        element.style.backgroundColor = "var(--bg-color)";
+    }
+
 }
 
 function addText() {

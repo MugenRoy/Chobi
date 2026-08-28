@@ -19,6 +19,12 @@
     --secondary-color: #D5ECD4;
     --secondary-color-light: #F1F9F1;
     --third-color: #A5D0A8;
+    --top-bar-color: #1b1c1f;
+    --dropdown-color: #2e3138;
+    --panel-color: #26282d;
+    --panel-color-light: #2e3138;
+    --text-color: #ffffff;
+    --text-secondary: #b7bbc4;
 }
 
 body {
@@ -117,7 +123,7 @@ main {
 
 .tool-icon {
     width: 100%;
-    background: transparent;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 10px 5px;
@@ -238,6 +244,7 @@ header {
 
 nav {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -277,6 +284,7 @@ nav {
     width: 100%;
     padding: 9px 14px;
     border: none;
+    background-color: var(--dropdown-color);
     color: var(--text-color);
     text-align: left;
     font-size: 14px;
