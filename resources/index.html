@@ -52,9 +52,16 @@
       </div>
       <main>
           <div id="left-sidebar">
-            <button id="selection-tool" class="tool-icon" onclick="selectionTool()" title="Selection Tool">
-                <img class="icon" src="/icons/tools/select.svg">
-            </button>
+            <button
+                    id="selection-tool"
+                    class="tool-button"
+                    title="Selection Tool"
+                    data-tool="select"
+                >
+                    <svg viewBox="0 0 24 24">
+                        <path d="m5 3 14 9-6 2-3 7-5-18Z"/>
+                    </svg>
+                </button>
             <button id="pencil-tool" class="tool-icon" onclick="" title="Pencil">
                 <img class="icon" src="/icons/tools/pencil.svg">
             </button>
