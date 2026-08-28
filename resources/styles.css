@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'PoppinsR';
+    src: url('/fonts/Poppins.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -37,7 +44,7 @@ body {
 
 #setup-top h1 {
     color: white;
-    font-family: "Poppins", monospace;
+    font-family: "PoppinsR", monospace;
     font-size: 5rem;
 }
 
@@ -53,7 +60,7 @@ body {
     background-color: #F2CD5D;
     color: black;
     border-radius: 2px;
-    font-family: "Poppins", monospace;
+    font-family: "PoppinsR", monospace;
     border: none;
     margin-left: 5px;
     cursor: pointer;
@@ -117,7 +124,6 @@ header {
     width: 100%;
     background-color: var(--top-bar-color);
     border-bottom: 1px solid var(--border-color);
-
     display: none;
     align-items: center;
 }
@@ -135,33 +141,22 @@ nav {
 
 .menu-button {
     height: 100%;
-
     padding: 0 15px;
-
     border: none;
     background: transparent;
-
     color: white;
-
     font-size: 14px;
-
     cursor: pointer;
 }
 
 .dropdown {
     display: none;
-
     position: absolute;
-
     top: 42px;
     left: 0;
-
     min-width: 170px;
-
     background-color: var(--dropdown-color);
-
     border: 1px solid var(--border-color);
-
     z-index: 1000;
 }
 
@@ -171,17 +166,11 @@ nav {
 
 .dropdown button {
     display: block;
-
     width: 100%;
-
     padding: 9px 14px;
-
     border: none;
-
     color: var(--text-color);
-
     text-align: left;
     font-size: 14px;
-
     cursor: pointer;
 }
