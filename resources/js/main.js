@@ -56,4 +56,10 @@ document.addEventListener("keydown", (event) => {
     else if (event.code == "KeyD" && event.ctrlKey) {
         // duplicateSelected(); -> Implement later
     }
+    else if (event.code == "KeyZ" && event.ctrlKey) {
+
+    }
+    else if (event.code == "KeyY" && event.ctrlKey) {
+
+    }
 });

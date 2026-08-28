@@ -118,7 +118,18 @@ main {
 #right-sidebar {
     height: 100%;
     width: 18vw;
+    display: flex;
+    flex-direction: column;
     border-left: 1px solid var(--border-color);
+}
+
+#sidebar-header {
+  height: 38px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .tool-icon {
