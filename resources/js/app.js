@@ -18,13 +18,13 @@ function createImage() {
     setup.style.display = "none";
 }
 
-const properties = {
+const cproperties = {
     width: window.innerWidth * 0.65,
     height: window.innerHeight * 0.75,
     isDrawingMode: false
 };
 
-const canvas = new fabric.Canvas("whiteboard", properties);
+const canvas = new fabric.Canvas("whiteboard", cproperties);
 
 const tools = {
     select: get("selection-tool"),

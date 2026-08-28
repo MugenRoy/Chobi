@@ -63,3 +63,10 @@ document.addEventListener("keydown", (event) => {
 
     }
 });
+
+
+const canvas_bg = get("canvas-bg");
+canvas_bg.onchange = () => {
+    canvas.backgroundColor = canvas_bg.value;
+    canvas.requestRenderAll();
+};
