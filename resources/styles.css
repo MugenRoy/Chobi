@@ -19,12 +19,7 @@
     --secondary-color: #D5ECD4;
     --secondary-color-light: #F1F9F1;
     --third-color: #A5D0A8;
-    --top-bar-color: #1b1c1f;
     --dropdown-color: #2e3138;
-    --panel-color: #26282d;
-    --panel-color-light: #2e3138;
-    --text-color: #ffffff;
-    --text-secondary: #b7bbc4;
 }
 
 body {
@@ -236,7 +231,7 @@ select {
 header {
     height: 42px;
     width: 100%;
-    background-color: var(--top-bar-color);
+    background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
     display: none;
     align-items: center;
