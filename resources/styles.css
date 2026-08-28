@@ -98,10 +98,21 @@ main {
 
 #left-sidebar {
     height: 100vh;
-    width: clamp(50px, 3.5vw, 80px);
-    border-right: 1px solid var(--border-color);
+    width: 4vw;
+    border-right: 1px solid var(--primary-color);
     display: flex;
     flex-direction: column;
+}
+
+#lsidebar-header {
+    padding: 0 12px;
+    border-bottom: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+#lsidebar-header h4 {
+    color: var(--bg-color);
+    font-family: "PoppinsR", monospace;
 }
 
 .tool-icon {
