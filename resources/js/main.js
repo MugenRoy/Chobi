@@ -2,25 +2,47 @@ function selectionTool() {
     canvas.isDrawingMode = false;
     canvas.selection = true;
 
-    tools.select.style.backgroundColor = "var(--border-color)";
+    tools.select.style.borderBottom = "1px solid var(--primary-color)";
+    tools.select.style.borderLeft = "1px solid var(--primary-color)";
+    tools.select.style.borderTop = "1px solid var(--primary-color)";
+
     for (const [name, element] of Object.entries(tools)) {
         if (name === "select") {
             continue;
         }
-        element.style.backgroundColor = "var(--bg-color)";
+        element.style.border = "none";
+    }
+}
+
+function pencilTool() {
+    canvas.isDrawingMode = true;
+    canvas.selection = false;
+
+    tools.pencil.style.borderBottom = "1px solid var(--primary-color)";
+    tools.pencil.style.borderLeft = "1px solid var(--primary-color)";
+    tools.pencil.style.borderTop = "1px solid var(--primary-color)";
+
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "pencil") {
+            continue;
+        }
+        element.style.border = "none";
     }
 }
 
 function drawTool() {
     canvas.isDrawingMode = true;
-    tools.draw.style.backgroundColor = "var(--border-color)";
+    canvas.selection = false;
+
+    tools.draw.style.borderBottom = "1px solid var(--primary-color)";
+    tools.draw.style.borderLeft = "1px solid var(--primary-color)";
+    tools.draw.style.borderTop = "1px solid var(--primary-color)";
     for (const [name, element] of Object.entries(tools)) {
         if (name === "draw") {
             continue;
         }
-        element.style.backgroundColor = "var(--bg-color)";
+        element.style.border = "none";
     }
-
 }
 
 function addText() {
