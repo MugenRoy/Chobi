@@ -39,7 +39,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 13vw;
+    width: 15vw;
 }
 
 #setup-top h1 {
@@ -52,7 +52,7 @@ body {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
-    width: 13vw;
+    width: 15vw;
 }
 
 #setup-bottom button {
