@@ -45,7 +45,49 @@ function drawTool() {
     }
 }
 
+function fillTool() {
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    tools.fill.style.borderBottom = "1px solid var(--primary-color)";
+    tools.fill.style.borderLeft = "1px solid var(--primary-color)";
+    tools.fill.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "fill") {
+            continue;
+        }
+        element.style.border = "none";
+    }
+}
+
+function eraserTool() {
+    canvas.isDrawingMode = true;
+    canvas.selection = false;
+
+    tools.eraser.style.borderBottom = "1px solid var(--primary-color)";
+    tools.eraser.style.borderLeft = "1px solid var(--primary-color)";
+    tools.eraser.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "eraser") {
+            continue;
+        }
+        element.style.border = "none";
+    }
+}
+
 function addText() {
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    tools.text.style.borderBottom = "1px solid var(--primary-color)";
+    tools.text.style.borderLeft = "1px solid var(--primary-color)";
+    tools.text.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "text") {
+            continue;
+        }
+        element.style.border = "none";
+    }
     let editableText = new fabric.Textbox('Edit Text', {
         left: canvas.width / 2,
         top: canvas.height / 2,
@@ -59,6 +101,51 @@ function addText() {
         textAlign : 'center',
     });
     canvas.add(editableText);
+}
+
+function shapesTool() {
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    tools.shapes.style.borderBottom = "1px solid var(--primary-color)";
+    tools.shapes.style.borderLeft = "1px solid var(--primary-color)";
+    tools.shapes.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "shapes") {
+            continue;
+        }
+        element.style.border = "none";
+    }
+}
+
+function cropTool() {
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    tools.crop.style.borderBottom = "1px solid var(--primary-color)";
+    tools.crop.style.borderLeft = "1px solid var(--primary-color)";
+    tools.crop.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "crop") {
+            continue;
+        }
+        element.style.border = "none";
+    }
+}
+
+function filterTool() {
+    canvas.isDrawingMode = false;
+    canvas.selection = false;
+
+    tools.filter.style.borderBottom = "1px solid var(--primary-color)";
+    tools.filter.style.borderLeft = "1px solid var(--primary-color)";
+    tools.filter.style.borderTop = "1px solid var(--primary-color)";
+    for (const [name, element] of Object.entries(tools)) {
+        if (name === "filter") {
+            continue;
+        }
+        element.style.border = "none";
+    }
 }
 
 function deleteSelected() {
