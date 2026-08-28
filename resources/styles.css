@@ -191,7 +191,7 @@ input[type="color"] {
     background: none;
     border: none;
     cursor: pointer;
-    width: 4rem;
+    width: 5rem;
 }
 
 input[type="number"], input[type="text"] {
@@ -200,9 +200,20 @@ input[type="number"], input[type="text"] {
     color: #fff;
     padding: 3px 6px;
     font-size: 12px;
-    width: 4rem;
+    width: 5rem;
     outline: none;
     font-family: "PoppinsR", monospace;
+}
+
+select {
+    width: 5rem;
+    border: 1px solid var(--border-color);
+    font-family: "PoppinsR", monospace;
+    background-color: var(--bg-color);
+    padding: 3px 6px;
+    font-size: 12px;
+    outline: none;
+    color: #fff;
 }
 
 header {
