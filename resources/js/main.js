@@ -14,6 +14,7 @@ function selectionTool() {
     }
 }
 
+
 function pencilTool() {
     canvas.isDrawingMode = true;
     canvas.selection = false;
@@ -28,7 +29,10 @@ function pencilTool() {
         }
         element.style.border = "none";
     }
+
+
 }
+
 
 function drawTool() {
     canvas.isDrawingMode = true;
@@ -45,6 +49,7 @@ function drawTool() {
     }
 }
 
+
 function fillTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -60,6 +65,7 @@ function fillTool() {
     }
 }
 
+
 function eraserTool() {
     canvas.isDrawingMode = true;
     canvas.selection = false;
@@ -74,6 +80,7 @@ function eraserTool() {
         element.style.border = "none";
     }
 }
+
 
 function addText() {
     canvas.isDrawingMode = false;
@@ -103,6 +110,7 @@ function addText() {
     canvas.add(editableText);
 }
 
+
 function shapesTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -117,6 +125,7 @@ function shapesTool() {
         element.style.border = "none";
     }
 }
+
 
 function cropTool() {
     canvas.isDrawingMode = false;
@@ -133,6 +142,7 @@ function cropTool() {
     }
 }
 
+
 function filterTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -147,6 +157,7 @@ function filterTool() {
         element.style.border = "none";
     }
 }
+
 
 function deleteSelected() {
     const activeObjects = canvas.getActiveObjects();
@@ -174,6 +185,7 @@ function deleteSelected() {
     canvas.requestRenderAll();
 }
 
+
 document.addEventListener("keydown", (event) => {
     if (event.code == "Delete") {
         deleteSelected();
@@ -195,3 +207,9 @@ canvas_bg.onchange = () => {
     canvas.backgroundColor = canvas_bg.value;
     canvas.requestRenderAll();
 };
+
+
+function clearCanvas() {
+    canvas_bg.value = "#FFFFFF";
+    canvas.clear();
+}
