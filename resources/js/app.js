@@ -71,6 +71,53 @@ async function openExistingImage() {
     canvas.requestRenderAll();
 }
 
+async function exportImage() {
+    try {
+
+        const savePath =
+            await Neutralino.os.showSaveDialog(
+                "Export Image",
+                {
+                    defaultPath: "chobi-export.png",
+                    filters: [{
+                        name: "PNG Image",
+                        extensions: ["png"]
+                    }]
+                }
+            );
+
+        if (!savePath) {
+            return;
+        }
+
+        const imageData = canvas.toDataURL({
+            format: "png"
+        });
+
+        const base64Data =
+            imageData.split(",")[1];
+
+        const binaryData = atob(base64Data);
+
+        const bytes =
+            new Uint8Array(binaryData.length);
+
+        for (let i = 0; i < binaryData.length; i++) {
+            bytes[i] = binaryData.charCodeAt(i);
+        }
+
+        await Neutralino.filesystem.writeBinaryFile(
+            savePath,
+            bytes.buffer
+        );
+
+        console.log("Export successful:", savePath);
+
+    }
+    catch(error) {
+        console.error(error);
+    }
+}
 
 const cproperties = {
     width: window.innerWidth * 0.65,
