@@ -68,7 +68,7 @@ function drawTool() {
         }
         element.style.border = "none";
     }
-    activeTool = "brush";
+    activeTool = "draw";
 }
 
 
