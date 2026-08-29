@@ -81,7 +81,8 @@ function eraserTool() {
     }
 }
 
-
+const textSize = get("text-size");
+const textColor = get("text-color");
 function addText() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -98,14 +99,11 @@ function addText() {
     let editableText = new fabric.Textbox('Edit Text', {
         left: canvas.width / 2,
         top: canvas.height / 2,
-        centerTransform: true,
         fontFamily: "Arial",
-        fontSize: "24",
-        fill: "#000",
-        originX: 'center',
-        originY: 'center',
+        fontSize: textSize.value,
+        fill: textColor.value,
         minScaleLimit: 0.2,
-        textAlign : 'center',
+        textAlign : 'left',
     });
     canvas.add(editableText);
 }
