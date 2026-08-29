@@ -408,6 +408,51 @@ function filterTool() {
     show("filter-props");
 }
 
+const filterPreset = get("filter-preset");
+const filterBrightness = get("filter-brightness");
+const filterContrast = get("filter-contrast");
+function applyFilters() {
+    let activeObject = canvas.getActiveObject();
+    if (!activeObject) {
+        return;
+    }
+
+    const preset = filterPreset.value;
+    switch (preset) {
+        case 'grayscale':
+            activeObject.filters[0] = new fabric.filters.Grayscale();
+            break;
+        case 'sepia':
+            activeObject.filters[1] = new fabric.filters.Sepia();
+            break;
+        case 'invert':
+            activeObject.filters[2] = new fabric.filters.Invert();
+            break;
+        case 'vintage':
+            activeObject.filters[3] = new fabric.filters.Vintage();
+            break;
+        case 'pixelate':
+            activeObject.filters[4] = new fabric.filters.Pixelate({ blocksize: 8 });
+            break;
+        default: {
+            activeObject.filters = [];
+            break;
+        }
+    }
+
+    const brightnessVal = parseFloat(filterBrightness.value) || 0;
+    if (brightnessVal !== 0) {
+        activeObject.filters.push(new fabric.filters.Brightness({ brightness: brightnessVal }));
+    }
+
+    const contrastVal = parseFloat(filterContrast.value) || 0;
+    if (contrastVal !== 0) {
+        activeObject.filters.push(new fabric.filters.Contrast({ contrast: contrastVal }));
+    }
+
+    activeObject.applyFilters();
+    canvas.requestRenderAll();
+}
 
 function deleteSelected() {
     const activeObjects = canvas.getActiveObjects();
