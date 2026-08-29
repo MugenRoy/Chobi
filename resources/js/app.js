@@ -18,6 +18,7 @@ function createImage() {
     main.style.display = "flex";
     const setup = get("setup");
     setup.style.display = "none";
+    selectionTool();
 }
 
 async function openExistingImage() {
@@ -75,17 +76,11 @@ async function openExistingImage() {
 }
 
 function createNew() {
-
     createImage();
-
     canvas.clear();
-
     canvas.backgroundColor = "#FFFFFF";
-
     canvas.requestRenderAll();
-
     canvas_bg.value = "#FFFFFF";
-
     canvas.discardActiveObject();
 }
 

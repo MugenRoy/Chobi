@@ -1,3 +1,6 @@
+let activeTool = "selection";
+
+
 function selectionTool() {
     canvas.isDrawingMode = false;
     canvas.selection = true;
@@ -12,6 +15,7 @@ function selectionTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "selection";
 }
 
 
@@ -35,6 +39,7 @@ function pencilTool() {
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.color = strokeColor.value;
     canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 5;
+    activeTool = "pencil";
 }
 
 strokeColor.onchange = () => {
@@ -63,6 +68,7 @@ function drawTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "brush";
 }
 
 
@@ -79,7 +85,23 @@ function fillTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "fill";
 }
+
+const fillColor = get("fill-color");
+canvas.on("mouse:down", (options) => {
+    if (activeTool != "fill") {
+        return;
+    }
+    const selectedColor = fillColor.value;
+
+    if (options.target) {
+        options.target.set("fill", selectedColor);
+    } else {
+        canvas.backgroundColor = selectedColor;
+    }
+    canvas.requestRenderAll();
+});
 
 
 const eraserSize = get("eraser-size");
@@ -100,6 +122,7 @@ function eraserTool() {
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.color = "#ffffff";
     canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 5;
+    activeTool = "eraser";
 }
 
 eraserSize.onchange = () => {
@@ -137,6 +160,7 @@ function addText() {
         textBackgroundColor: bgColor.value
     });
     canvas.add(editableText);
+    activeTool = "textbox";
 }
 
 
@@ -153,6 +177,7 @@ function shapesTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "shapes";
 }
 
 
@@ -169,6 +194,7 @@ function cropTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "crop";
 }
 
 
@@ -185,6 +211,7 @@ function filterTool() {
         }
         element.style.border = "none";
     }
+    activeTool = "filter";
 }
 
 
