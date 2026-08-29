@@ -52,19 +52,22 @@ async function openExistingImage() {
 
         const imageUrl = URL.createObjectURL(blob);
         const img = await fabric.Image.fromURL(imageUrl);
-
         img.set({
             left: canvas.width / 2,
-            top: canvas.height / 2,
-            width: canvas.width,
-            height: canvas.height
+            top: canvas.height / 2
         });
         canvas.add(img);
         canvas.setActiveObject(img);
         canvas.requestRenderAll();
     }
-    catch(error) {
-        console.error(error);
+    catch (error) {
+        await Neutralino.os.showMessageBox(
+            "Error Opening Image",
+            "Could not open the selected file. It may be corrupted or in an unsupported format.",
+            "OK",
+            "ERROR"
+        );
+        return;
     }
 
     createImage();
