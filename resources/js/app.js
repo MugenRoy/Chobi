@@ -76,7 +76,6 @@ async function openExistingImage() {
 
 async function exportImage() {
     try {
-
         const savePath =
             await Neutralino.os.showSaveDialog(
                 "Export Image",
@@ -97,13 +96,10 @@ async function exportImage() {
             format: "png"
         });
 
-        const base64Data =
-            imageData.split(",")[1];
+        const base64Data = imageData.split(",")[1];
 
         const binaryData = atob(base64Data);
-
-        const bytes =
-            new Uint8Array(binaryData.length);
+        const bytes = new Uint8Array(binaryData.length);
 
         for (let i = 0; i < binaryData.length; i++) {
             bytes[i] = binaryData.charCodeAt(i);
@@ -113,12 +109,14 @@ async function exportImage() {
             savePath,
             bytes.buffer
         );
-
-        console.log("Export successful:", savePath);
-
     }
-    catch(error) {
-        console.error(error);
+    catch (error) {
+        await Neutralino.os.showMessageBox(
+            "Error Exporting Image",
+            "Could not export image. Error: "+error,
+            "OK",
+            "ERROR"
+        );
     }
 }
 

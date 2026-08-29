@@ -15,6 +15,8 @@ function selectionTool() {
 }
 
 
+const strokeColor = get("stroke-color");
+const strokeSize = get("stroke-size");
 function pencilTool() {
     canvas.isDrawingMode = true;
     canvas.selection = false;
@@ -29,9 +31,22 @@ function pencilTool() {
         }
         element.style.border = "none";
     }
-
-
+    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    canvas.freeDrawingBrush.color = strokeColor.value;
+    canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 5;
 }
+
+strokeColor.onchange = () => {
+    if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.color = strokeColor.value;
+    }
+};
+
+strokeSize.onchange = () => {
+    if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 1;
+    }
+};
 
 
 function drawTool() {
