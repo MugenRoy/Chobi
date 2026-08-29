@@ -82,7 +82,9 @@ function eraserTool() {
 }
 
 const textSize = get("text-size");
+const bgColor = get("bg-color");
 const textColor = get("text-color");
+const textAlign = get("text-align");
 function addText() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -103,7 +105,8 @@ function addText() {
         fontSize: textSize.value,
         fill: textColor.value,
         minScaleLimit: 0.2,
-        textAlign : 'left',
+        textAlign: textAlign.value,
+        textBackgroundColor: bgColor.value
     });
     canvas.add(editableText);
 }

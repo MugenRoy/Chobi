@@ -19,7 +19,6 @@
     --secondary-color: #D5ECD4;
     --secondary-color-light: #F1F9F1;
     --third-color: #A5D0A8;
-    --dropdown-color: #2e3138;
 }
 
 body {
@@ -165,6 +164,23 @@ main {
 #sidebar-header h1 {
     color: var(--bg-color);
     font-family: "PoppinsR", monospace;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+}
+
+#sidebar-contents {
+    height: 87%;
+    overflow-y: auto;
 }
 
 .section-title {
