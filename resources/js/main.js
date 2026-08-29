@@ -324,11 +324,14 @@ function cropTool() {
     canvas.requestRenderAll();
 }
 
-function cancelCrop() {
+function cancelCrop(select = false) {
     if (cropRect) {
         canvas.remove(cropRect);
         cropRect = null;
         canvas.requestRenderAll();
+    }
+    if (select) {
+        selectionTool();
     }
 }
 
