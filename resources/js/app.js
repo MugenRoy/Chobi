@@ -74,6 +74,21 @@ async function openExistingImage() {
     canvas.requestRenderAll();
 }
 
+function createNew() {
+
+    createImage();
+
+    canvas.clear();
+
+    canvas.backgroundColor = "#FFFFFF";
+
+    canvas.requestRenderAll();
+
+    canvas_bg.value = "#FFFFFF";
+
+    canvas.discardActiveObject();
+}
+
 async function exportImage() {
     try {
         const savePath =
