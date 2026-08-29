@@ -43,18 +43,27 @@ function pencilTool() {
 }
 
 strokeColor.onchange = () => {
+    if (activeTool != "pencil") {
+        return;
+    }
     if (canvas.freeDrawingBrush) {
         canvas.freeDrawingBrush.color = strokeColor.value;
     }
 };
 
 strokeSize.onchange = () => {
+    if (activeTool != "pencil") {
+        return;
+    }
     if (canvas.freeDrawingBrush) {
         canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 1;
     }
 };
 
 
+const brushColor = get("brush-color");
+const brushSize = get("brush-size");
+const brushType = get("brush-type");
 function drawTool() {
     canvas.isDrawingMode = true;
     canvas.selection = false;
@@ -69,7 +78,48 @@ function drawTool() {
         element.style.border = "none";
     }
     activeTool = "draw";
+    if (brushType.value == "Bubble") {
+        canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
+    }
+    else {
+        canvas.freeDrawingBrush = new fabric.SprayBrush(canvas);
+    }
+    canvas.freeDrawingBrush.color = brushColor.value;
+    canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10) || 5;
 }
+
+brushColor.onchange = () => {
+    if (activeTool != "draw") {
+        return;
+    }
+    if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.color = brushColor.value;
+    }
+};
+
+brushSize.onchange = () => {
+    if (activeTool != "draw") {
+        return;
+    }
+    if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10) || 1;
+    }
+};
+
+brushType.onchange = () => {
+    if (activeTool != "draw") {
+        return;
+    }
+    if (brushType.value == "Bubble") {
+        canvas.freeDrawingBrush = new fabric.CircleBrush(canvas);
+    }
+    else {
+        canvas.freeDrawingBrush = new fabric.SprayBrush(canvas);
+    }
+    canvas.freeDrawingBrush.color = brushColor.value;
+    canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10) || 5;
+};
+
 
 
 function fillTool() {
@@ -118,7 +168,6 @@ function eraserTool() {
         }
         element.style.border = "none";
     }
-    console.log(canvas.backgroundColor);
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.color = "#ffffff";
     canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 5;
