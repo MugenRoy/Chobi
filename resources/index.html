@@ -62,10 +62,10 @@
             <button id="eraser-tool" class="tool-icon" onclick="eraserTool()" title="Eraser">
                 <img class="icon" src="/icons/tools/eraser.svg">
             </button>
-            <button id="text-tool" class="tool-icon" onclick="addText()" title="Add Text">
+            <button id="text-tool" class="tool-icon" onclick="textTool()" title="Textbox">
                 <img class="icon" src="/icons/tools/text.svg">
             </button>
-            <button id="shapes-tool" class="tool-icon" onclick="shapesTool()" title="Add Shapes">
+            <button id="shapes-tool" class="tool-icon" onclick="shapesTool()" title="Shapes">
                 <img class="icon" src="/icons/tools/shapes.svg">
             </button>
             <button id="crop-tool" class="tool-icon" onclick="cropTool()" title="Crop">
@@ -89,8 +89,8 @@
                           <label for="canvas-bg">Background Color:</label>
                           <input type="color" id="canvas-bg" value="#ffffff" />
                       </div>
-                      <div class="prop-row">
-                          <button onclick="clearCanvas()" class="sbutton">Clear board</button>
+                      <div class="prop-row" style="margin-top: 8px;">
+                          <button onclick="clearCanvas()" class="sbutton" style="width: 100%; margin-left: 0;">Clear board</button>
                       </div>
                   </div>
                   <div id="selection-props" class="prop-section">
@@ -181,6 +181,35 @@
                               <option>justify-right</option>
                           </select>
                       </div>
+                      <div class="prop-row" style="margin-top: 8px;">
+                          <button onclick="addText()" class="sbutton" style="width: 100%; margin-left: 0;">Add Text</button>
+                      </div>
+                 </div>
+                 <div id="shapes-props" class="prop-section">
+                     <div class="section-title">Shapes</div>
+                     <div class="prop-row">
+                         <label for="shape-type">Shape Type:</label>
+                         <select id="shape-type">
+                             <option value="rect">Rectangle</option>
+                             <option value="circle">Circle</option>
+                             <option value="triangle">Triangle</option>
+                         </select>
+                     </div>
+                     <div class="prop-row">
+                         <label for="shape-fill">Fill Color:</label>
+                         <input type="color" id="shape-fill" value="#A5D0A8" />
+                     </div>
+                     <div class="prop-row">
+                         <label for="shape-stroke">Stroke Color:</label>
+                         <input type="color" id="shape-stroke" value="#F2CD5D" />
+                     </div>
+                     <div class="prop-row">
+                         <label for="shape-stroke-width">Stroke Width:</label>
+                         <input type="number" id="shape-stroke-width" min="0" max="50" value="2" />
+                     </div>
+                     <div class="prop-row" style="margin-top: 8px;">
+                         <button onclick="addShape()" class="sbutton" style="width: 100%; margin-left: 0;">Add Shape</button>
+                     </div>
                  </div>
               </div>
           </div>

@@ -185,7 +185,7 @@ const textSize = get("text-size");
 const bgColor = get("bg-color");
 const textColor = get("text-color");
 const textAlign = get("text-align");
-function addText() {
+function textTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
 
@@ -198,6 +198,10 @@ function addText() {
         }
         element.style.border = "none";
     }
+    activeTool = "textbox";
+}
+
+function addText() {
     let editableText = new fabric.Textbox('Edit Text', {
         left: canvas.width / 2,
         top: canvas.height / 2,
@@ -209,10 +213,13 @@ function addText() {
         textBackgroundColor: bgColor.value
     });
     canvas.add(editableText);
-    activeTool = "textbox";
 }
 
 
+const shapeType = get("shape-type");
+const shapeFill = get("shape-fill");
+const shapeStroke = get("shape-stroke");
+const shapeStrokeWidth = get("shape-stroke-width");
 function shapesTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -227,6 +234,50 @@ function shapesTool() {
         element.style.border = "none";
     }
     activeTool = "shapes";
+}
+
+function addShape() {
+    let shape;
+    switch (shapeType.value) {
+        case 'rect': {
+            shape = new fabric.Rect({
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fill: shapeFill.value,
+                stroke: shapeStroke.value,
+                strokeWidth: parseInt(shapeStrokeWidth.value, 10) || 0,
+                width: 120,
+                height: 80
+            });
+            break;
+        }
+        case 'circle': {
+            shape = new fabric.Circle({
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fill: shapeFill.value,
+                stroke: shapeStroke.value,
+                strokeWidth: parseInt(shapeStrokeWidth.value, 10) || 0,
+                radius: 50
+            });
+            break;
+        }
+        case 'triangle': {
+            shape = new fabric.Triangle({
+                left: canvas.width / 2,
+                top: canvas.height / 2,
+                fill: shapeFill.value,
+                stroke: shapeStroke.value,
+                strokeWidth: parseInt(shapeStrokeWidth.value, 10) || 0,
+                width: 100,
+                height: 100
+            });
+            break;
+        }
+    }
+    canvas.add(shape);
+    canvas.setActiveObject(shape);
+    canvas.requestRenderAll();
 }
 
 
