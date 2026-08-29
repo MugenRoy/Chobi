@@ -1,6 +1,24 @@
 let activeTool = "selection";
 
 
+function show(sectionId) {
+    const sections = document.querySelectorAll('.prop-section');
+    for (let section of sections) {
+        if (section === canvas_props) {
+            continue;
+        }
+        section.style.display = "none";
+    }
+
+    if (sectionId) {
+        const targetSection = get(sectionId);
+        if (targetSection) {
+            targetSection.style.display = 'flex';
+        }
+    }
+}
+
+
 function selectionTool() {
     canvas.isDrawingMode = false;
     canvas.selection = true;
@@ -17,6 +35,7 @@ function selectionTool() {
     }
     activeTool = "selection";
     cancelCrop();
+    show("canvas-props");
 }
 
 
@@ -42,6 +61,8 @@ function pencilTool() {
     canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 5;
     activeTool = "pencil";
     cancelCrop();
+    show("pencil-props");
+
 }
 
 strokeColor.onchange = () => {
@@ -89,6 +110,7 @@ function drawTool() {
     canvas.freeDrawingBrush.color = brushColor.value;
     canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10) || 5;
     cancelCrop();
+    show("brush-props");
 }
 
 brushColor.onchange = () => {
@@ -140,6 +162,7 @@ function fillTool() {
     }
     activeTool = "fill";
     cancelCrop();
+    show("fill-props");
 }
 
 const fillColor = get("fill-color");
@@ -177,6 +200,7 @@ function eraserTool() {
     canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 5;
     activeTool = "eraser";
     cancelCrop();
+    show("eraser-props");
 }
 
 eraserSize.onchange = () => {
@@ -205,6 +229,7 @@ function textTool() {
     }
     activeTool = "textbox";
     cancelCrop();
+    show("textbox-props");
 }
 
 function addText() {
@@ -241,6 +266,7 @@ function shapesTool() {
     }
     activeTool = "shapes";
     cancelCrop();
+    show("shapes-props");
 }
 
 function addShape() {
@@ -322,6 +348,7 @@ function cropTool() {
     canvas.add(cropRect);
     canvas.setActiveObject(cropRect);
     canvas.requestRenderAll();
+    show("crop-props");
 }
 
 async function applyCrop() {
@@ -339,7 +366,6 @@ async function applyCrop() {
         width: rect.width,
         height: rect.height,
     });
-
     canvas.clear();
 
     let image = await fabric.Image.fromURL(cropped);
@@ -349,7 +375,6 @@ async function applyCrop() {
     });
     canvas.add(image);
     canvas.requestRenderAll();
-
     selectionTool();
 }
 
@@ -380,6 +405,7 @@ function filterTool() {
     }
     activeTool = "filter";
     cancelCrop();
+    show("filter-props");
 }
 
 

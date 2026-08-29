@@ -19,7 +19,7 @@
     --secondary-color: #D5ECD4;
     --secondary-color-light: #F1F9F1;
     --third-color: #A5D0A8;
-    --fourth-color: #84E296;
+    --fourth-color: #90E0EF;
 }
 
 body {
@@ -232,7 +232,7 @@ header {
 }
 
 .prop-section {
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 5px 20px;
 }

@@ -149,3 +149,7 @@ const tools = {
     crop: get("crop-tool"),
     filter: get("filter-tool"),
 };
+
+const canvas_props = get("canvas-props");
+
+canvas_props.style.display = "flex";
