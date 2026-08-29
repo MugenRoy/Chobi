@@ -16,6 +16,7 @@ function selectionTool() {
         element.style.border = "none";
     }
     activeTool = "selection";
+    cancelCrop();
 }
 
 
@@ -40,6 +41,7 @@ function pencilTool() {
     canvas.freeDrawingBrush.color = strokeColor.value;
     canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 5;
     activeTool = "pencil";
+    cancelCrop();
 }
 
 strokeColor.onchange = () => {
@@ -86,6 +88,7 @@ function drawTool() {
     }
     canvas.freeDrawingBrush.color = brushColor.value;
     canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10) || 5;
+    cancelCrop();
 }
 
 brushColor.onchange = () => {
@@ -136,6 +139,7 @@ function fillTool() {
         element.style.border = "none";
     }
     activeTool = "fill";
+    cancelCrop();
 }
 
 const fillColor = get("fill-color");
@@ -172,6 +176,7 @@ function eraserTool() {
     canvas.freeDrawingBrush.color = "#ffffff";
     canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 5;
     activeTool = "eraser";
+    cancelCrop();
 }
 
 eraserSize.onchange = () => {
@@ -199,6 +204,7 @@ function textTool() {
         element.style.border = "none";
     }
     activeTool = "textbox";
+    cancelCrop();
 }
 
 function addText() {
@@ -234,6 +240,7 @@ function shapesTool() {
         element.style.border = "none";
     }
     activeTool = "shapes";
+    cancelCrop();
 }
 
 function addShape() {
@@ -323,7 +330,6 @@ function cancelCrop() {
         cropRect = null;
         canvas.requestRenderAll();
     }
-    selectionTool();
 }
 
 
@@ -341,6 +347,7 @@ function filterTool() {
         element.style.border = "none";
     }
     activeTool = "filter";
+    cancelCrop();
 }
 
 
