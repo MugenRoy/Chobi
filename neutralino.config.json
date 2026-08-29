@@ -20,22 +20,10 @@
     "window.*",
     "filesystem.*"
   ],
-  "globalVariables": {
-    "TEST1": "Hello",
-    "TEST2": [
-      2,
-      4,
-      5
-    ],
-    "TEST3": {
-      "value1": 10,
-      "value2": {}
-    }
-  },
   "modes": {
     "window": {
       "title": "Chobi",
-      "width": 1024,
+      "width": 1366,
       "height": 768,
       "minWidth": 800,
       "minHeight": 600,
@@ -45,15 +33,12 @@
       "icon": "/resources/icons/pg1.png",
       "enableInspector": true,
       "borderless": false,
-      "maximize": false,
+      "maximize": true,
       "hidden": false,
       "resizable": true,
       "exitProcessOnClose": false
     },
     "browser": {
-      "globalVariables": {
-        "TEST": "Test value browser"
-      },
       "nativeBlockList": [
         "filesystem.*"
       ]
