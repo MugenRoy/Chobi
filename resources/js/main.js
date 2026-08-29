@@ -1,3 +1,72 @@
+async function openExistingImage() {
+    try {
+        const selectedFiles = await Neutralino.os.showOpenDialog(
+            "Open Image",
+            {
+                filters: [{
+                    name: "Images",
+                    extensions: [
+                        "png",
+                        "jpg",
+                        "jpeg",
+                        "bmp",
+                        "webp"
+                    ]
+                }]
+            }
+        );
+
+        if (!selectedFiles || selectedFiles.length < 1) {
+            return;
+        }
+
+        const imagePath = selectedFiles[0];
+
+        const fileData =
+            await Neutralino.filesystem.readBinaryFile(
+                imagePath
+            );
+
+        const blob = new Blob(
+            [new Uint8Array(fileData)],
+            { type: "image/*" }
+        );
+
+        const imageUrl =
+            URL.createObjectURL(blob);
+
+        const img = await fabric.Image.fromURL(imageUrl);
+
+        img.set({
+            left: canvas.width / 2,
+            top: canvas.height / 2,
+            originX: "center",
+            originY: "center"
+        });
+
+        canvas.add(img);
+
+        canvas.setActiveObject(img);
+
+        canvas.requestRenderAll();
+
+        console.log(canvas.getObjects());
+    }
+    
+    catch(error) {
+        console.error(error);
+    }
+
+    createImage();
+
+    canvas.setDimensions({
+        width: window.innerWidth * 0.65,
+        height: window.innerHeight * 0.75
+    });
+
+    canvas.requestRenderAll();
+}
+
 function selectionTool() {
     canvas.isDrawingMode = false;
     canvas.selection = true;
