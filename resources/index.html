@@ -11,28 +11,6 @@
     <script src="/js/main.js" defer></script>
   </head>
   <body>
-      <header>
-          <nav>
-              <div class="menu">
-                  <button class="menu-button">
-                      File
-                  </button>
-                  <div class="dropdown">
-                      <button onclick="createNew()">
-                          Create New
-                      </button>
-                      <button onclick="openExistingImage()">
-                          Import
-                      </button>
-                  </div>
-                </div>
-                <div style="margin-left:auto;">
-                    <button class="pbutton" onclick="exportImage()">
-                        Export
-                    </button>
-              </div>
-          </nav>
-      </header>
       <div id="setup">
           <div id="setup-top">
               <h1>Chobi</h1>
@@ -76,7 +54,27 @@
             </button>
           </div>
           <div id="middle-area">
-              <canvas id="whiteboard"></canvas>
+              <header>
+                  <div id="menu">
+                      <div id="menu-header">
+                          <h4 id="menu-title">Menu</h4>
+                      </div>
+                      <button class="tool-icon" onclick="createNew()" title="New">
+                          <img class="icon" src="/icons/tools/new.svg">
+                      </button>
+                      <button class="tool-icon" onclick="openExistingImage()" title="Import">
+                          <img class="icon" src="/icons/tools/import.svg">
+                      </button>
+                  </div>
+                  <div style="margin-left:auto; margin-right: 10px;">
+                      <button class="tool-icon" onclick="exportImage()" title="Export">
+                          <img class="icon" src="/icons/tools/export.svg">
+                      </button>
+                  </div>
+              </header>
+              <div id="canvas-area">
+                  <canvas id="whiteboard"></canvas>
+              </div>
           </div>
           <div id="right-sidebar">
               <div id="sidebar-header">
