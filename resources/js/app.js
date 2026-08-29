@@ -91,10 +91,11 @@ async function exportImage() {
                 "Export Image",
                 {
                     defaultPath: "chobi-export.png",
-                    filters: [{
-                        name: "PNG Image",
-                        extensions: ["png"]
-                    }]
+                    filters: [
+                        { name: "PNG Image", extensions: ["png"] },
+                        { name: "JPEG Image", extensions: ["jpg", "jpeg"] },
+                        { name: "WebP Image", extensions: ["webp"] }
+                    ]
                 }
             );
 
@@ -102,12 +103,18 @@ async function exportImage() {
             return;
         }
 
+        const extension = savePath.split('.').pop().toLowerCase();
+        let format = 'png';
+        if (extension === 'jpg' || extension === 'jpeg') {
+            format = 'jpeg';
+        } else if (extension === 'webp') {
+            format = 'webp';
+        }
         const imageData = canvas.toDataURL({
-            format: "png"
+            format: format
         });
 
         const base64Data = imageData.split(",")[1];
-
         const binaryData = atob(base64Data);
         const bytes = new Uint8Array(binaryData.length);
 

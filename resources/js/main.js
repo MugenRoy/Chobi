@@ -485,15 +485,15 @@ document.addEventListener("keydown", (event) => {
     if (event.code == "Delete") {
         deleteSelected();
     }
-    else if (event.code == "KeyD" && event.ctrlKey) {
-        // duplicateSelected(); -> Implement later
-    }
-    else if (event.code == "KeyZ" && event.ctrlKey) {
+    // else if (event.code == "KeyD" && event.ctrlKey) {
+    //     // duplicateSelected(); -> Implement later
+    // }
+    // else if (event.code == "KeyZ" && event.ctrlKey) {
 
-    }
-    else if (event.code == "KeyY" && event.ctrlKey) {
+    // }
+    // else if (event.code == "KeyY" && event.ctrlKey) {
 
-    }
+    // }
 });
 
 
