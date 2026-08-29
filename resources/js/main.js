@@ -324,6 +324,35 @@ function cropTool() {
     canvas.requestRenderAll();
 }
 
+async function applyCrop() {
+    if (!cropRect) return;
+
+    const rect = cropRect.getBoundingRect();
+
+    canvas.remove(cropRect);
+    cropRect = null;
+    canvas.requestRenderAll();
+
+    const cropped = canvas.toDataURL({
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+        height: rect.height,
+    });
+
+    canvas.clear();
+
+    let image = await fabric.Image.fromURL(cropped);
+    image.set({
+        left: canvas.width / 2,
+        top: canvas.height / 2,
+    });
+    canvas.add(image);
+    canvas.requestRenderAll();
+
+    selectionTool();
+}
+
 function cancelCrop(select = false) {
     if (cropRect) {
         canvas.remove(cropRect);
