@@ -31,6 +31,7 @@ function pencilTool() {
         }
         element.style.border = "none";
     }
+
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.color = strokeColor.value;
     canvas.freeDrawingBrush.width = parseInt(strokeSize.value, 10) || 5;
@@ -81,6 +82,7 @@ function fillTool() {
 }
 
 
+const eraserSize = get("eraser-size");
 function eraserTool() {
     canvas.isDrawingMode = true;
     canvas.selection = false;
@@ -94,7 +96,18 @@ function eraserTool() {
         }
         element.style.border = "none";
     }
+    console.log(canvas.backgroundColor);
+    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    canvas.freeDrawingBrush.color = "#ffffff";
+    canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 5;
 }
+
+eraserSize.onchange = () => {
+    if (canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.width = parseInt(eraserSize.value, 10) || 1;
+    }
+};
+
 
 const textSize = get("text-size");
 const bgColor = get("bg-color");
