@@ -280,7 +280,7 @@ function addShape() {
     canvas.requestRenderAll();
 }
 
-
+let cropRect = null;
 function cropTool() {
     canvas.isDrawingMode = false;
     canvas.selection = false;
@@ -295,6 +295,35 @@ function cropTool() {
         element.style.border = "none";
     }
     activeTool = "crop";
+
+    if (cropRect) {
+        canvas.remove(cropRect);
+    }
+    cropRect = new fabric.Rect({
+            left: canvas.width / 2,
+            top: canvas.height / 2,
+            width: canvas.width * 0.5,
+            height: canvas.height * 0.5,
+            fill: "transparent",
+            stroke: "#000000",
+            strokeWidth: 2,
+            strokeDashArray: [10, 5],
+            transparentCorners: false,
+            hasRotatingPoint: true
+        });
+
+    canvas.add(cropRect);
+    canvas.setActiveObject(cropRect);
+    canvas.requestRenderAll();
+}
+
+function cancelCrop() {
+    if (cropRect) {
+        canvas.remove(cropRect);
+        cropRect = null;
+        canvas.requestRenderAll();
+    }
+    selectionTool();
 }
 
 
